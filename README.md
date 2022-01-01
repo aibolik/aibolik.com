@@ -1,0 +1,1 @@
+# aibolik.com - beginning of a new project
