@@ -1,0 +1,28 @@
+:root {
+  /* --hs-links: 48 100%; */
+  --color-foreground: hsl(230, 58%, 82%);
+  --color-background: hsl(230, 33%, 21%);
+
+
+  /* --color-links: hsl(var(--hs-links) 50%);
+  --color-links-hover: hsl(var(--hs-links) 45%);
+  --color-border: hsl(277, 85%, 38%);
+  --color-invalid: hsl(356, 100%, 71%);
+  --gradient-background: radial-gradient(
+    circle,
+    rgba(152, 11, 238, 1) 0%,
+    rgba(118, 15, 181, 1) 35%,
+    rgba(58, 13, 85, 1) 100%
+  );*/
+  --font-body: -apple-system, "Segoe UI", Helvetica Neue, Helvetica,
+    Roboto, Arial, sans-serif, system-ui, "Apple Color Emoji",
+    "Segoe UI Emoji";
+  /* --font-display: baloo, var(--font-body);  */
+}
+
+body {
+  color: var(--color-foreground);
+  background-color: var(--color-background);
+
+  font-family: var(--font-body);
+}
