@@ -7,6 +7,7 @@ type MdxPage = {
     title?: string;
     description?: string;
     readTimeInMins?: number;
+    publishedOn: string;
   }
 }
 

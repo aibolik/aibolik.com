@@ -1,6 +1,7 @@
 import path from 'path';
 import * as fs from 'fs/promises';
 import { bundleMDX } from 'mdx-bundler';
+import { parse } from 'date-fns';
 
 async function getMdxPagesInDirectory(contentDir: string) {
   const dirPath = `content/${contentDir}`;
@@ -24,6 +25,13 @@ async function getMdxPagesInDirectory(contentDir: string) {
       };
     })
   );
+
+  mdxContents.sort((postA, postB) => {
+    const dateA = parse(postA.frontmatter.publishedOn, 'dd-MM-yyyy', new Date());
+    const dateB = parse(postB.frontmatter.publishedOn, 'dd-MM-yyyy', new Date());
+    
+    return dateB.getTime() - dateA.getTime();
+  })
 
 
   return mdxContents;
