@@ -4,6 +4,7 @@
   --color-body-text: hsl(230, 58%, 82%);
   --color-heading-text: hsl(60, 100%, 100%);
   --color-white: hsl(0, 0%, 100%);
+  --color-primary: hsl(18, 60%, 83%);
 
   --font-weight-regular: 400;
   --font-weight-semibold: 600;

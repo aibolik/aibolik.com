@@ -6,7 +6,7 @@ import { MaxWidthWrapper } from './max-width-wrapper';
 const LINKS = [
   { name: 'All posts', to: '/all'},
   { name: 'Topics', to: '/topics'},
-  { name: 'Short writes', to: '/topics'},
+  { name: 'Short writes', to: '/short-writes'},
   { name: 'Who is Aibol?', to: '/me'},
 ]
 
@@ -54,7 +54,7 @@ const Header: React.FC = () => {
         <Nav>
           <LinksWrapper>
             {LINKS.map(({ name, to }) => (
-              <li>
+              <li key={to}>
                 <ListLink to={to}>
                   {name}
                 </ListLink>
