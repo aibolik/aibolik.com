@@ -2,8 +2,10 @@ import { LoaderFunction, useLoaderData } from 'remix';
 import styled from 'styled-components';
 import { Header } from '~/components/header';
 import { MaxWidthWrapper } from '~/components/max-width-wrapper';
+import { NewsletterForm } from '~/components/newsletter-form';
 import { HeroSection } from '~/components/sections/hero-section';
 import { RecentPosts } from '~/components/sections/recent-posts';
+import { Spacer } from '~/components/spacer';
 import type { MdxListItem } from '~/types';
 import { getMdxBlogs } from '~/utils/mdx.server';
 
@@ -37,6 +39,8 @@ export default function Index() {
       <Main as="main">
         <RecentPosts blogPosts={data.blogPosts} />
       </Main>
+      <Spacer $size={32} />
+      <NewsletterForm />
     </div>
   );
 }
