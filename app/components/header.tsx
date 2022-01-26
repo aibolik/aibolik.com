@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link, Links } from 'remix';
 import styled from 'styled-components';
+import { Logo } from './logo';
 import { MaxWidthWrapper } from './max-width-wrapper';
 
 const LINKS = [
@@ -13,13 +14,6 @@ const LINKS = [
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-`;
-
-const Logo = styled(Link)`
-  font-size: 1.75rem;
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-white);
-  text-decoration: none;
 `;
 
 const Nav = styled.nav`

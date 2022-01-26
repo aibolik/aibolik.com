@@ -1,5 +1,6 @@
 import { LoaderFunction, useLoaderData } from 'remix';
 import styled from 'styled-components';
+import { Footer } from '~/components/footer';
 import { Header } from '~/components/header';
 import { MaxWidthWrapper } from '~/components/max-width-wrapper';
 import { NewsletterForm } from '~/components/newsletter-form';
@@ -41,6 +42,8 @@ export default function Index() {
       </Main>
       <Spacer $size={32} />
       <NewsletterForm />
+      <Spacer $size={64} />
+      <Footer />
     </div>
   );
 }
