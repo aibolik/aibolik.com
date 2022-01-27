@@ -1,0 +1,231 @@
+---
+title: Creating Toast API with React hooks
+description: In this blog post we will be gradually creating fully working Toast API and we will use advantages of React Hooks to create nicer hooks-supported interface.
+readTimeInMins: 5
+publishedOn: 12-01-2020
+---
+
+export const hookExampleSrc = 'https://images.ctfassets.net/w1fxlmsi3y1l/5YvjYmfYGdZ81zbnvMEc4N/78024be15a0b2c8f80f66c99041ab8f3/image.png';
+
+In this blog post we will be gradually creating fully working Toast API and we will use advantages of React Hooks to create nicer hooks-supported interface. Full working example is available [here](https://codesandbox.io/s/awesome-engelbart-cwyqh?fontsize=14&hidenavigation=1&theme=dark).
+
+<BlogImage
+  imgProps={{ src: hookExampleSrc, alt: 'Example of shown toast notification' }}
+  caption="Example of shown toast notification" 
+/>
+
+## Toast component
+
+Let's start by creating simple Toast component. It should be simple nice looking box that renders some content. For simplicity of this application, let that content be just a text.
+
+> I will use [`styled-components`](https://www.styled-components.com/) in this example for styling.
+
+```jsx
+const Wrapper = styled.div`
+  margin-right: 16px;
+  margin-top: 16px;
+  width: 200px;
+
+  position: relative;
+  padding: 16px;
+  border: 1px solid #d7d7d7;
+  border-radius: 3px;
+  background: white;
+  box-shadow: 0px 4px 10px 0px #d7d7d7;
+  color: #494e5c;
+`;
+
+const Toast = ({ children }) => (
+  <Wrapper>{children}</Wrapper>
+);
+```
+
+Now we have basic Toast, you can test it out by rendering `<Toast>Example</Toast>` in your root component(`App.js`). 
+
+## ToastContainer component
+
+Usually, there can be several toasts at the same time and they are positioned at some corner of the page. Therefore, it makes sense to create `ToastContainer` component, that will be responsible for toasts positioning and rendering them in a sequence. 
+
+> For simplicity, let's assume that toast notifications will always be rendered at top right corner. If you want it to be more customizable, `ToastContainer` is a right place for this.
+
+Additionally, in order to not mess with z-index, it is better to render components like toasts somewhere up in a DOM tree. In our example we will render them directly inside `body` of the page. We can easily accomplish this using [ReactDOM's `createPortal` API](https://reactjs.org/docs/portals.html).
+
+```jsx
+const Wrapper = styled.div`
+  position: absolute;
+  /* Top right corner */
+  right: 0;
+  top: 0;
+`;
+
+const ToastContainer = ({ toasts }) => {
+  return createPortal(
+    <Wrapper>
+      {toasts.map(item => (
+        <Toast key={item.id} id={item.id}>{toast.content}</Toast>
+      )}
+    </Wrapper>,
+    document.body
+  );
+}
+```
+
+Inside of wrapper we render array of toasts. We assume that `toasts` is an array of objects with `id` and `content` keys. `id` is a unique ID of each toast notification that we will use later to dismiss it, and `content` is just a text.
+
+## ToastProvider
+
+We built `Toast` and `ToastContainer` components, but we will not expose them directly. Instead, we will expose them through `ToastProvider` component, that will be responsible for rendering and managing all toasts. If we were building some library or package, `ToastProvider` would be the one exported and exposed to its consumers(of course along with hooks). 
+
+Since it should hold all toasts, let's use React's [`useState` hook](https://reactjs.org/docs/hooks-reference.html#usestate) to save and manage toasts array.
+
+```jsx
+const ToastProvider = ({ children }) => {
+  const [toasts, setToasts] = useState([]);
+  
+  // ...
+}
+```
+
+`ToastProvider` will also use [React's context API](https://reactjs.org/docs/context.html) to pass helper functions down the tree: `addToast` and `removeToast`. 
+
+### `addToast` function
+
+This function should add toast object into `toasts` array in `ToastProvider`. So it's usage will look like this: `addToast('You friend John liked your photo')`. As you can see, it should take a string as an argument, that will end up being `content`. Assigning of ID will be responsibility of the function, therefore we need some way of tracking unique IDs. For simplicity, we can have global variable `id` that will be incremented on each function call. Let's see how the function would look:
+
+```jsx
+let id = 0;
+const ToastProvider = ({ children }) => {
+  // ...
+  
+  const addToast = useCallback(content => {
+    setToasts(toasts => [
+      ...toasts,
+      { id: id++, content }
+    ]);
+  }, [setToasts]);
+  
+  // ...
+}
+```
+
+> Note the usage of [functional update](https://reactjs.org/docs/hooks-reference.html#functional-updates) of `setToasts`. We need to use that, since new toasts array is computed using previous state.
+
+I used `useCallback`, as a small optimization. We don't need to recreate this function on every render, therefore we use `useCallback` hook. Read more about it in [React's hooks documentation](https://reactjs.org/docs/hooks-reference.html#usecallback).
+
+### `removeToast` function
+
+Contrary to `addToast`, this function should remove toast object from `toasts` array in `ToastProvider` component given the ID of a toast. Guess where this function should be called from... from anywhere where ID is known! Remember we added `id` prop to `Toast` component? We will use that `id` to call `removeToast`. Let's see this function's code:
+
+```jsx
+const ToastProvider = ({ children }) => {
+  // ...
+
+  const addToast = useCallback(content => {
+    setToasts(toasts => [
+      ...toasts,
+      { id: id++, content }
+    ]);
+  }, [setToasts]);
+
+  const removeToast = useCallback(id => {
+    setToasts(toasts => toasts.filter(t => t.id !== id));
+  }, [setToasts]);
+  
+  // ...
+}
+```
+
+Very simple function - we just filter out the dismissed toast by its ID.
+
+We are almost done with `ToastProvider` component. Let's put everything together and see how it would look:
+
+```jsx
+const ToastContext = React.createContext(null);
+
+let id = 1;
+
+const ToastProvider = ({ children }) => {
+  const [toasts, setToasts] = useState([]);
+  
+  const addToast = useCallback(content => {
+    setToasts(toasts => [
+      ...toasts,
+      { id: id++, content }
+    ]);
+  }, [setToasts]);
+  
+  const removeToast = useCallback(id => {
+    setToasts(toasts => toasts.filter(t => t.id !== id));
+  }, [setToasts]);
+  
+  return (
+    <ToastContext.Provider value={{ addToast, removeToast }}>
+      <ToastContainer toasts={toasts} />
+      {children}
+    </ToastContext.Provider>
+  );
+}
+```
+
+Nothing new in this code: we just added `ToastContext`, so that `addToast` and `removeToast` can be used anywhere down the React tree. Then we render `ToastContainer`, that will be rendered always inside `body` of page, thanks to [Portals](https://reactjs.org/docs/portals.html). And `children`, since `ToastProvider` is rendered at the top level of React tree(along with other providers, e.g. Redux's Provider, `ThemeProvider`, etc.).
+
+### `useToast` hook
+
+Finally we reached to creating our own hook, that will be exported along with `ToastProvider`. This hook is actually very simple and consists of only 2 lines of code. It's purpose is to make `addToast` and `removeToast` available with just a function/hook call. Without this hook, you'd use `addToast` and `removeToast` by importing `ToastContext` and usage of `React.useContext`:
+
+```jsx
+import { ToastContext } from './path/to/ToastProvider';
+
+const Example = () => {
+  const { addToast } = React.useContext(ToastContext);
+  // ...
+```
+
+Let's implement this simple hook:
+
+```jsx
+export function useToast() {
+  const toastHelpers = React.useContext(ToastContext);
+  return toastHelpers;
+}
+```
+
+We don't need to import `ToastContext` because this hook resides along with it in `ToastProvider` component. And now we can simply call it like this: 
+
+```jsx
+const { addToast } = useToast();
+```
+
+## Dismissing toasts with timeout
+
+We can add toasts with `addToast` and now they need to be automatically dismissed. I think the right place for this is a `Toast` component, since it is aware of its own lifecycle and aware of ID sent to it as props.
+
+We need to fire a `setTimeout` with a call to `removeToast` after delay. The best way we can do this is using [`useEffect` hook](https://reactjs.org/docs/hooks-reference.html#useeffect).
+
+> Side note about `useEffect`: it will run passed callback function whenever one of dependencies changes. 
+
+So, we will use `removeToast` and `id` in dependencies list for this *effect*, since everything used inside the function should be passed as a dependency. We assume(and know) that `id` and `removeToast` function won't change, that means the *effect* will only be called upon first render. Let's see how it looks in code:
+
+```jsx
+const Toast = ({ children, id }) => {
+  const { removeToast } = useToast();
+  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      removeToast(id);
+    }, 3000); // delay
+    
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [id, removeToast]);
+
+  // ...render toast content as before...
+}
+```
+
+> Note the [clean up function](https://reactjs.org/docs/hooks-reference.html#cleaning-up-an-effect) in `useEffect`: we need to clean up timer, so that it won't cause errors in case of unexpected removal of component.
+
+That's it! Now it works as expected. Feel free to play with the demo in [CodeSandbox](https://codesandbox.io/s/awesome-engelbart-cwyqh?fontsize=14&hidenavigation=1&theme=dark).
+
+If you want to go further and practice more you can try enhancing it by adding some more customisation. For example by configuring `delay`, render position, styling and more. Most likely `ToastProvider` is the best place for that, since it is exposed to consumer and renders all other components. 

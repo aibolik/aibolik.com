@@ -1,25 +1,73 @@
 import path from 'path';
 import * as fs from 'fs/promises';
+import { constants } from 'fs';
 import { bundleMDX } from 'mdx-bundler';
 import { parse } from 'date-fns';
+
+const fileExists = async (path: string) => {
+  try {
+    await fs.access(path, constants.F_OK);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+const getMdxFileOrDirectory = async (contentDir: string, slug: string) => {
+  const dirPath = `content/${contentDir}`;
+  const absPath = path.resolve(__dirname, '..', dirPath);
+
+  const mdxFilePath = path.resolve(absPath, `${slug}.mdx`);
+
+  const isMdxFile = (await fileExists(mdxFilePath));
+
+  if (isMdxFile) {
+    return {
+      file: mdxFilePath,
+      cwd: path.resolve(absPath),
+    };
+  }
+
+  return {
+    file: path.resolve(absPath, slug, 'index.mdx'),
+    cwd: path.resolve(absPath, slug),
+  };
+}
+
+async function getMdxPage(contentDir: string, slug: string) {
+  const { file, cwd } = await getMdxFileOrDirectory(contentDir, slug);
+
+  const { code, frontmatter } = await bundleMDX({
+    file,
+    cwd,
+  });
+
+  return {
+    slug,
+    code,
+    frontmatter,
+  };
+}
 
 async function getMdxPagesInDirectory(contentDir: string) {
   const dirPath = `content/${contentDir}`;
   const absPath = path.resolve(__dirname, '..', dirPath);
 
-  const mdxFiles = (await fs.readdir(absPath)).filter(filename => filename.includes(`.mdx`));
-  
+  const mdxFilesOrDirs = (await fs.readdir(absPath)).map((fileOrDir) => {
+    return fileOrDir.replace('.mdx', '');
+  });
+
   const mdxContents = await Promise.all(
-    mdxFiles.map(async (filename) => {
-      const [slug, ] = filename.split('.');
+    mdxFilesOrDirs.map(async (fileOrDirectory) => {
+      const { file, cwd } = await getMdxFileOrDirectory(contentDir, fileOrDirectory);
 
       const { code, frontmatter } = await bundleMDX({
-        file: path.resolve(absPath, filename),
-        cwd: path.resolve(absPath),
+        file,
+        cwd,
       });
 
       return {
-        slug,
+        slug: fileOrDirectory,
         code,
         frontmatter,
       };
@@ -45,4 +93,5 @@ async function getMdxBlogs() {
 
 export {
   getMdxBlogs,
+  getMdxPage,
 };
