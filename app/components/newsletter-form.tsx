@@ -65,10 +65,14 @@ const CTAButton = styled.button`
   min-width: 175px;
   padding: 16px 48px;
   cursor: pointer;
-  background: var(--color-primary);
-  color: var(--color-primary-foreground);
+  background: var(--blue9);
+  color: white;
   font-weight: var(--font-weight-semibold);
   border-radius: 4px;
+
+  :hover {
+    background: var(--blue10);
+  }
 `;
 
 const EmailForm: React.FC = () => {

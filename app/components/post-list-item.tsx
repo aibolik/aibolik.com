@@ -9,8 +9,19 @@ interface PostListItemProps {
 
 const LinkWrapper = styled(Link)`
   display: block;
-  color: var(--color-text);
+  color: var(--color-body-text);
   text-decoration: none;
+  padding: 24px;
+  margin-left: -24px;
+  margin-right: -24px;
+  border-radius: 4px;
+
+  transition: background 150ms, transform 150ms;
+
+  :hover {
+    background: var(--blue4);
+    transform: translate(12px, 0);
+  }
 `;
 
 const Title = styled.h3`
@@ -24,7 +35,7 @@ const PreviewText = styled.p`
 `;
 
 const ReadCTA = styled.div`
-  color: var(--color-heading-text);
+  color: var(--slate11);
   font-style: italic;
   margin-top: 12px;
 `;

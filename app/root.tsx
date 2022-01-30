@@ -10,10 +10,12 @@ import type { MetaFunction, LinksFunction } from "remix";
 
 import globalStylesUrl from './styles/global.css';
 import customResetUrl from './styles/custom-reset.css';
+import { radixColorsLinks } from './styles/colors.links';
 
 export const links: LinksFunction = () => {
 
   return [
+    ...radixColorsLinks,
     {
       rel: 'stylesheet', href: globalStylesUrl,
     },
@@ -47,7 +49,7 @@ export default function App() {
         <Links />
         {typeof document === "undefined" ? "__STYLES__" : null}
       </head>
-      <body>
+      <body className="dark-theme">
         <Outlet />
         <ScrollRestoration />
         <Scripts />

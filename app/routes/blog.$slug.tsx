@@ -10,6 +10,7 @@ import { MaxWidthWrapper } from '~/components/max-width-wrapper';
 import { Spacer } from '~/components/spacer';
 import { BlogImage } from '~/components/blog/blog-image';
 import { Footer } from '~/components/footer';
+import { BlogAnchor } from '~/components/blog-anchor';
 
 type LoaderData = {
   page: MdxPage;
@@ -47,18 +48,44 @@ const Heading = styled.h1`
 
 const PublishedOn = styled.div`
   font-style: italic;
-  font-size: 1.5rem;
-  /* TODO: update to semantic/from-scheme color */
-  color: #ACACAC
+  font-size: 1.125rem;
+  color: var(--mauve11);
 `;
 
 const MainContent = styled.main`
   max-width: 725px;
   margin: 0 auto;
+
+  p {
+    margin-bottom: 32px;
+  }
+
+  h2 {
+    font-size: 2rem;
+    margin-top: 64px;
+    margin-bottom: 16px;
+    color: var(--mauve12);
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    margin-top: 64px;
+    margin-bottom: 12px;
+  }
+
+  h2 code,
+  h3 code {
+    font-size: 1em;
+  }
+
+  code {
+    font-size: 1rem;
+  }
 `;
 
 const mdxComponents = {
   BlogImage,
+  a: BlogAnchor,
 };
 
 export default function BlogPage() {

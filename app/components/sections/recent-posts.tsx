@@ -29,8 +29,8 @@ const RecentPosts: React.FC<RecentPostsProps> = ({
       <Heading>
         My recent writings
       </Heading>
-      <Spacer $size={32} />
-      <Stack $space={48}>
+      <Spacer $size={8} />
+      <Stack $space={16}>
         {blogPosts.map((post) => (
           <PostListItem key={post.slug} post={post} />
         ))}

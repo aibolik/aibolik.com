@@ -31,6 +31,14 @@ body {
   font-family: var(--font-body);
 }
 
+.dark-theme {
+  --color-background: var(--blue1);
+  --color-body-text: var(--slate12);
+  --color-heading-text: var(--indigo12);
+  --color-white: hsl(0, 0%, 100%);
+  --color-primary: var(--blue11);
+}
+
 /**
 
     [CSS custom variables set example]
