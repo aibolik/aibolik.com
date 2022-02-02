@@ -1,6 +1,7 @@
 import unifiedTypes from 'unified';
 import { Node } from 'unist';
 import visit, { Visitor } from 'unist-util-visit';
+import u from 'unist-builder';
 
 interface NodeWithProps extends Node {
   properties?: any;
@@ -21,6 +22,16 @@ const attacher: unifiedTypes.Plugin = () => {
       if (className && className.startsWith('language-')) {
         const lang = className.slice(9);
         parent.properties['data-lang'] = lang;
+        parent.children.push(
+          u(
+            'element', 
+            {
+              tagName: 'div',
+              properties: { className: 'code-lang' },
+            },
+            [u('text', lang)]
+          )
+        );
       }
     }
 

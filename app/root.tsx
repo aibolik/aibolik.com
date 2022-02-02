@@ -31,6 +31,9 @@ export const links: LinksFunction = () => {
     {
       rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;1,400&display=swap'
     },
+    {
+      rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Red+Hat+Mono:wght@400;500&display=swap',
+    }
   ];
 }
 

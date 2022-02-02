@@ -21,6 +21,7 @@
     rgba(58, 13, 85, 1) 100%
   );*/
   --font-body: 'Poppins', sans-serif, system-ui, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-family-mono: 'Red Hat Mono', monospace;
   /* --font-display: baloo, var(--font-body);  */
 }
 

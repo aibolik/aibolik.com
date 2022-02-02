@@ -43,11 +43,13 @@ async function getMdxPage(contentDir: string, slug: string) {
     file,
     cwd,
     xdmOptions(options) {
-      // Material-Theme-Palenight
-      // Material-Theme-Ocean
-      // zeit
+      /**
+      - Material-Theme-Palenight
+      - Material-Theme-Ocean
+      - zeit
+      */
       options.rehypePlugins = [...(options.rehypePlugins ?? []), 
-        [rehypeShiki, { theme: 'Material-Theme-Palenight', useBackground: false }],
+        [rehypeShiki, { theme: 'Material-Theme-Palenight', useBackground: true }],
         rehypeCodeLang,
       ];
 
