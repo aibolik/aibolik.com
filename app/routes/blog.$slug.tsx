@@ -11,6 +11,7 @@ import { Spacer } from '~/components/spacer';
 import { BlogImage } from '~/components/blog/blog-image';
 import { Footer } from '~/components/footer';
 import { BlogAnchor } from '~/components/blog-anchor';
+import { FencedCode } from '~/components/fenced-code';
 
 type LoaderData = {
   page: MdxPage;
@@ -86,6 +87,7 @@ const MainContent = styled.main`
 const mdxComponents = {
   BlogImage,
   a: BlogAnchor,
+  pre: FencedCode,
 };
 
 export default function BlogPage() {

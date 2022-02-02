@@ -3,6 +3,8 @@ import * as fs from 'fs/promises';
 import { constants } from 'fs';
 import { bundleMDX } from 'mdx-bundler';
 import { parse } from 'date-fns';
+import rehypeShiki from 'rehype-shiki';
+import rehypeCodeLang from '~/plugins/rehype-code-lang';
 
 const fileExists = async (path: string) => {
   try {
@@ -40,6 +42,17 @@ async function getMdxPage(contentDir: string, slug: string) {
   const { code, frontmatter } = await bundleMDX({
     file,
     cwd,
+    xdmOptions(options) {
+      // Material-Theme-Palenight
+      // Material-Theme-Ocean
+      // zeit
+      options.rehypePlugins = [...(options.rehypePlugins ?? []), 
+        [rehypeShiki, { theme: 'Material-Theme-Palenight', useBackground: false }],
+        rehypeCodeLang,
+      ];
+
+      return options;
+    },
   });
 
   return {
