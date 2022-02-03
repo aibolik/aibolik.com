@@ -12,6 +12,7 @@ import { BlogImage } from '~/components/blog/blog-image';
 import { Footer } from '~/components/footer';
 import { BlogAnchor } from '~/components/blog-anchor';
 import { FencedCode } from '~/components/fenced-code';
+import { InlineCode } from '~/components/inline-code';
 
 type LoaderData = {
   page: MdxPage;
@@ -79,8 +80,9 @@ const MainContent = styled.main`
     font-size: 1em;
   }
 
-  code {
-    font-size: 1rem;
+  hr {
+    margin-top: 64px;
+    margin-bottom: 64px;
   }
 `;
 
@@ -88,6 +90,7 @@ const mdxComponents = {
   BlogImage,
   a: BlogAnchor,
   pre: FencedCode,
+  code: InlineCode,
 };
 
 export default function BlogPage() {
