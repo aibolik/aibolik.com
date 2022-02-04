@@ -10,6 +10,10 @@ const Code = styled.code`
     font-size: 85%;
     font-weight: 500;
   }
+
+  a & {
+    color: inherit;
+  }
 `;
 
 type CodeProps = Omit<JSX.IntrinsicElements['code'], 'ref'>;

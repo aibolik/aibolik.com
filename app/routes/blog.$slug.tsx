@@ -14,6 +14,7 @@ import { BlogAnchor } from '~/components/blog-anchor';
 import { FencedCode } from '~/components/fenced-code';
 import { InlineCode } from '~/components/inline-code';
 import { OrderedList, ListItem, UnorderedList } from '~/components/lists';
+import { Blockquote } from '~/components/blockquote';
 
 type LoaderData = {
   page: MdxPage;
@@ -95,6 +96,7 @@ const mdxComponents = {
   ol: OrderedList,
   ul: UnorderedList,
   li: ListItem,
+  blockquote: Blockquote,
 };
 
 export default function BlogPage() {

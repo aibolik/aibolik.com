@@ -7,7 +7,7 @@ interface BlogImageProps {
 }
 
 const Wrapper = styled.div`
-  padding: 24px 0 32px;
+  margin: 24px 0 32px;
 `;
 
 const Image = styled.img`
