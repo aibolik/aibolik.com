@@ -13,6 +13,7 @@ import { Footer } from '~/components/footer';
 import { BlogAnchor } from '~/components/blog-anchor';
 import { FencedCode } from '~/components/fenced-code';
 import { InlineCode } from '~/components/inline-code';
+import { OrderedList, ListItem, UnorderedList } from '~/components/lists';
 
 type LoaderData = {
   page: MdxPage;
@@ -59,19 +60,19 @@ const MainContent = styled.main`
   margin: 0 auto;
 
   p {
-    margin-bottom: 32px;
+    margin-bottom: 24px;
   }
 
   h2 {
     font-size: 2rem;
-    margin-top: 64px;
+    margin-top: 56px;
     margin-bottom: 16px;
     color: var(--mauve12);
   }
 
   h3 {
     font-size: 1.5rem;
-    margin-top: 64px;
+    margin-top: 40px;
     margin-bottom: 12px;
   }
 
@@ -91,6 +92,9 @@ const mdxComponents = {
   a: BlogAnchor,
   pre: FencedCode,
   code: InlineCode,
+  ol: OrderedList,
+  ul: UnorderedList,
+  li: ListItem,
 };
 
 export default function BlogPage() {
