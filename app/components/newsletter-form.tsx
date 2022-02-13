@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { MaxWidthWrapper } from './max-width-wrapper';
 import { Spacer } from './spacer';
 import NewsletterIcon from '~/assets/newsletter-icon.svg';
+import { themeGet } from '~/utils/theme-get';
 
 const Heading = styled.h2`
   font-weight: var(--font-weight-semibold);
@@ -30,10 +31,18 @@ const Icon = styled.img`
   height: 206px;
   margin: auto;
   transform: rotate(15deg);
+
+  @media ${themeGet('breakpoints.mobile')} {
+    display: none;
+  }
 `;
 
 const EmailInputForm = styled.form`
   display: flex;
+
+  @media ${themeGet('breakpoints.mobile')} {
+    flex-direction: column;
+  }
 `;
 
 const placeholderCss = css`
@@ -69,6 +78,10 @@ const CTAButton = styled.button`
   color: white;
   font-weight: var(--font-weight-semibold);
   border-radius: 4px;
+
+  @media ${themeGet('breakpoints.mobile')} {
+    margin-top: 24px;
+  }
 
   :hover {
     background: var(--blue10);

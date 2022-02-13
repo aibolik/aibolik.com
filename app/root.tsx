@@ -11,6 +11,7 @@ import type { MetaFunction, LinksFunction } from "remix";
 import globalStylesUrl from './styles/global.css';
 import customResetUrl from './styles/custom-reset.css';
 import { radixColorsLinks } from './styles/colors.links';
+import { ThemeProvider } from "./components/core/theme-provider";
 
 export const links: LinksFunction = () => {
 
@@ -53,10 +54,12 @@ export default function App() {
         {typeof document === "undefined" ? "__STYLES__" : null}
       </head>
       <body className="dark-theme">
-        <Outlet />
-        <ScrollRestoration />
-        <Scripts />
-        {process.env.NODE_ENV === "development" && <LiveReload />}
+        <ThemeProvider>
+          <Outlet />
+          <ScrollRestoration />
+          <Scripts />
+          {process.env.NODE_ENV === "development" && <LiveReload />}
+        </ThemeProvider>
       </body>
     </html>
   );
