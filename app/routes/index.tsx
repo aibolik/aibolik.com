@@ -9,6 +9,7 @@ import { RecentPosts } from '~/components/sections/recent-posts';
 import { Spacer } from '~/components/spacer';
 import type { MdxListItem } from '~/types';
 import { getMdxBlogs } from '~/utils/mdx.server';
+import { themeGet } from '~/utils/theme-get';
 
 type LoaderData = {
   blogPosts: MdxListItem[];
@@ -26,8 +27,15 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 const Main = styled(MaxWidthWrapper)`
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-areas: "recent wip";
+  grid-template-columns: 1fr;
+  grid-template-areas: 
+    "recent"
+    "wip";
+
+  @media ${themeGet('breakpoints.desktop')} {
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas: "recent wip";
+  }
 `;
 
 export default function Index() {

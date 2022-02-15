@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { themeGet } from '~/utils/theme-get';
 
 const Pre = styled.pre`
   position: relative;
@@ -9,6 +10,12 @@ const Pre = styled.pre`
   margin-right: -16px;
   margin-bottom: 32px;
   overflow-x: auto;
+
+  @media ${themeGet('breakpoints.mobile')} {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
 
   scrollbar-width: thin;
   --scrollbar-bg-color: rgba(0, 0, 0, .1);

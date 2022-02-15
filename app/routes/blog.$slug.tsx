@@ -39,7 +39,7 @@ const HeaderWrapper = styled.div`
 `;
 
 const Hero = styled(MaxWidthWrapper)`
-  padding: 128px 0 56px; 
+  padding: 128px 16px 56px; 
   text-align: center;
 `;
 
@@ -59,6 +59,8 @@ const PublishedOn = styled.div`
 const MainContent = styled.main`
   max-width: 725px;
   margin: 0 auto;
+
+
 
   p {
     margin-bottom: 24px;
@@ -121,9 +123,11 @@ export default function BlogPage() {
           {getFriendlyDate(publishedOn)}
         </PublishedOn>
       </Hero>
-      <MainContent>
-        <Component components={mdxComponents} />
-      </MainContent>
+      <MaxWidthWrapper>
+        <MainContent>
+          <Component components={mdxComponents} />
+        </MainContent>
+      </MaxWidthWrapper>
       <Spacer $size={64} />
       <Footer />
     </div>

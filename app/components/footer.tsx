@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link } from 'remix';
 import styled from 'styled-components';
+import { themeGet } from '~/utils/theme-get';
 import { Logo } from './logo';
 import { MaxWidthWrapper } from './max-width-wrapper';
 import { Spacer } from './spacer';
@@ -15,10 +16,26 @@ const Wrapper = styled.footer`
   padding: 32px 0;
 `;
 
-const Flex = styled.div`
+const LinksWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+
+  @media ${themeGet('breakpoints.mobile')} {
+    justify-content: flex-start;
+  }
 `;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  @media ${themeGet('breakpoints.mobile')} {
+    flex-direction: column-reverse;
+    gap: 48px;
+  }
+`;
+
+
 
 const CopyrightText = styled.p`
   font-size: 0.75rem;
@@ -67,23 +84,25 @@ const BLOG_LINKS = [
   },
 ];
 
+const COPYRIGHT_TEXT = `© 2022-presnt, Aibol Kussain.`;
+
 const Footer: React.FC = () => {
 
   return (
     <Wrapper>
       <MaxWidthWrapper>
-        <Flex>
+        <Container>
           <div>
             <Logo to="/">AibolKussain</Logo>
             <Spacer $size={16} />
             <CopyrightText>
               This website was built and designed by myself.
               <br /><br />
-              © 2022-presnt, Aibol Kussain.
+              {COPYRIGHT_TEXT}
             </CopyrightText>
           </div>
           <div>
-            <Flex>
+            <LinksWrapper>
               <div>
                 <LinksHeading>Blog</LinksHeading>
                 <Spacer $size={8} />
@@ -107,9 +126,9 @@ const Footer: React.FC = () => {
                   ))}
                 </Stack>
               </div>
-            </Flex>
+            </LinksWrapper>
           </div>
-        </Flex>
+        </Container>
       </MaxWidthWrapper>
     </Wrapper>
   );
