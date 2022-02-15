@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Link } from 'remix';
 import styled from 'styled-components';
 import { MdxListItem } from '~/types';
+import { themeGet } from '~/utils/theme-get';
 
 interface PostListItemProps {
   post: MdxListItem;
@@ -21,6 +22,14 @@ const LinkWrapper = styled(Link)`
   :hover {
     background: var(--blue4);
     transform: translate(12px, 0);
+  }
+
+  @media ${themeGet('breakpoints.mobile')} {
+    border-radius: 0;
+    :hover {
+      background: var(--blue4);
+      transform: none;
+    }
   }
 `;
 
