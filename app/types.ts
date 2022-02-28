@@ -8,6 +8,7 @@ type MdxPage = {
     description?: string;
     readTimeInMins?: number;
     publishedOn?: string;
+    isDraft?: boolean;
   }
 }
 

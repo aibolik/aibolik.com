@@ -94,10 +94,12 @@ async function getMdxPagesInDirectory(contentDir: string) {
     const dateB = parse(postB.frontmatter.publishedOn, 'dd-MM-yyyy', new Date());
     
     return dateB.getTime() - dateA.getTime();
-  })
+  });
 
 
-  return mdxContents;
+  return mdxContents.filter((post) => {
+    return post?.frontmatter?.isDraft === false || typeof post?.frontmatter?.isDraft === 'undefined';
+  });
 }
 
 async function getMdxBlogs() {
