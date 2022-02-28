@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { LoaderFunction, useLoaderData } from 'remix';
+import { LoaderFunction, MetaFunction, useLoaderData } from 'remix';
 import { MdxPage } from "~/types"
 import { getMdxPage } from "~/utils/mdx.server"
 import { getMDXComponent } from 'mdx-bundler/client';
@@ -32,6 +32,17 @@ export const loader: LoaderFunction = async ({ params }) => {
   };
 
   return data;
+}
+
+export const meta: MetaFunction = ({ data }) => {
+  const { frontmatter } = data.page;
+
+  const { title } = frontmatter;
+
+
+  return {
+    title,
+  };
 }
 
 const HeaderWrapper = styled.div`

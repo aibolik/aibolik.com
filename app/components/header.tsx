@@ -50,6 +50,7 @@ const ListLink = styled(Link)`
 const MobileOverlay = styled.div`
   position: fixed;
   inset: 0;
+  z-index: 1;
 `;
 
 const MobileBackdrop = styled.button`

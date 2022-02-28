@@ -39,7 +39,10 @@ export const links: LinksFunction = () => {
 }
 
 export const meta: MetaFunction = () => {
-  return { title: "New Remix App" };
+  return {
+    title: 'Aibol Kussain\'s blog',
+    description: 'My creative space where I share my learnings in tech with interactive and friendly blog posts. Read more!'
+  };
 };
 
 export default function App() {
