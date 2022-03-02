@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link } from 'remix';
 
-const StyledLink = styled(Link)`
+const anchorStyles = css`
   text-decoration: none;
   color: var(--blue11);
   font-weight: var(--font-weight-semibold);
@@ -12,6 +12,14 @@ const StyledLink = styled(Link)`
   }
 `;
 
+const ExternalLink = styled.a`
+  ${anchorStyles};
+`;
+
+const InternalLink = styled(Link)`
+  ${anchorStyles};
+`;
+
 type BlogAnchorProps = Omit<JSX.IntrinsicElements['a'], 'ref'>;
 
 function BlogAnchor({
@@ -19,11 +27,18 @@ function BlogAnchor({
   href,
   ...anchorProps
 }: BlogAnchorProps) {
+  if (href?.startsWith('http://') || href?.startsWith('https://')) {
+    return (
+      <ExternalLink {...anchorProps} href={href} target="_blank">
+        {children}
+      </ExternalLink>
+    );
+  }
 
   return (
-    <StyledLink {...anchorProps} to={(href as string)}>
+    <InternalLink {...anchorProps} to={(href as string)}>
       {children}
-    </StyledLink>
+    </InternalLink>
   );
 }
 
