@@ -1,0 +1,204 @@
+---
+title: Create your own virtual DOM to understand it (Part 1)
+description: In this article I want to recap my experience creating own “virtual DOM”. Sounds too ambitiously? Probably, but it is not that complicated as you might think. As the title states, it will make sense when you create your own, rather than reading thousands of articles about it.
+readTimeInMins: 8
+publishedOn: 26-07-2018
+---
+
+In this article I want to recap my experience creating own “virtual DOM”. Sounds too ambitiously? Probably, but it is not that complicated as you might think. As the title states, it will make sense when you create your own, rather than reading thousands of articles about it.
+
+> Originally, I was inspired by the talk of [stefan judis](https://medium.com/u/c3a0319fab53) at Web Rebels 2018, so feel free to take a look at it [here](https://youtu.be/kghSjWmNJyQ).
+
+This concept of **Virtual DOM** got popular back in 2013 when [React was released](https://reactjs.org/blog/2013/06/05/why-react.html). Because of this concept ReactJS is one of super fast libraries for building UI. I’ll try to explain it in few sentences, then we will get to writing own one.
+
+> Virtual DOM is the representation of DOM as an object. When changes to state of application are made, new Virtual DOM is compared(applying **[diffing algorithms](https://reactjs.org/docs/reconciliation.html)**) with DOM and only changes are reflected, not causing full re-rendering of DOM.
+
+Ok, here is a plan how we will create our virtual DOM.
+
+1. Create *hyperscript* function to render DOM — it is kinda [JSX](https://reactjs.org/docs/jsx-in-depth.html)
+2. Create simple app with hyperscript
+3. Make our App dynamic and learn to render virtual DOM
+4. Implement diffing algorithm to see the power of virtual DOM
+
+## HyperScript implementation
+
+If you ever worked with ReactJS you probably know what is JSX. It can be another topic for discussion, but shortly it transforms “HTML-like” syntax into JavaScript function calls, in React it is transferred as `React.createElement`. So, in this step our aim is to *recreate* this awesome function.
+
+Generally, it is the building block that creates virtual DOM. However, in this step I want to emphasize how we can build simple DOM with it and in further steps we will develop it to make virtual DOM.
+
+The inputs for this function are: *type of node, properties(a.k.a. attributes), children*. So here is a simple implementation of this function:
+
+```js
+export default function hyperscript(nodeName, attrs, ...children) {
+
+  const $el = document.createElement(nodeName);
+
+  for (let key in attrs) {
+    $el.setAttribute(key, attrs[key]);
+  }
+
+  children.forEach(child => {
+    if (typeof child === 'string') {
+      $el.appendChild(document.createTextNode(child));
+    } else {
+      $el.appendChild(child);
+    }
+  });
+
+  return $el;
+}
+```
+
+Firstly, It simply creates DOM element with *nodeName*. Secondly, sets its attributes, and last step to append child nodes with the check for text nodes.
+
+> **Note:** actually, we could go further and render children recursively, but I left this for later for simplicity reason.
+
+Here is how it can be used(from now on we will use `h` instead of `hyperscript`):
+
+```js
+const App = () => {
+  return h(
+    'h1',
+    null,
+    'Hello, vDOM!'
+  );
+}
+```
+
+export const appResultSrc = 'https://images.ctfassets.net/w1fxlmsi3y1l/3etAfLQOxic0eAmc0e0mi/19a7fd0f1710913e345eaa15c6c0644b/app_result.png';
+
+<BlogImage
+  imgProps={{ src: appResultSrc, alt: 'Rendered heading level one element' }}
+  caption="Result of calling App() function" 
+/>
+
+## Creating application with Hyperscript
+
+Okay, we now can create simple application with the help of Hyperscript. Let’s create a bit more complex application than it was in previous step. Here is our newer __*App*__ function.
+
+```js
+const App = (props) => {
+  const { list } = props;
+  
+  return h( 'div', { class: 'app' },
+    h('h1', null, 'Simple vDOM'),
+    h(
+      'ul', null,
+      ...list.map(item => h( 'li', null, item))
+    )
+  );
+};
+```
+
+When the **App** is executed it creates a *div*, with two children: one rendering H1 heading, and the second one unordered list. Note that we pass *props* to our function and render **props.list** into unordered list. Let’s add some more rendering magic:
+
+```js
+let currentApp;
+const render = (state) => {
+  const newApp = App(state);
+  currentApp 
+    ? document.body.replaceChild(newApp, currentApp)
+    : document.body.appendChild(newApp);
+  
+  currentApp = newApp;
+}
+
+const state = {
+  list: [
+    '🕺', '💃', '😀', '🙋‍♀️', '💼',
+    '🕶', '👏', '🤳', '🕵️‍♀️', '👩‍🔧',
+  ]
+};
+
+render(state);
+```
+
+Generally, we just want to render the output of App function(that is valid DOM) into the body of document giving the state that contains emojis list.
+
+export const staticAppSrc = 'https://images.ctfassets.net/w1fxlmsi3y1l/4TgXDb3lF6WOoOceOGoeKg/97b2396b4abd8a633a1e1259b0e9095c/static_app.png';
+
+<BlogImage 
+  imgProps={{ src: staticAppSrc, alt: 'Static list of rendered smileys' }}
+  caption="Result of our work"
+/>
+
+*It wasn’t that hard. Is it?* Let’s add some dynamic content, and add random emoji every 1 second this way we can see how our app renders.
+
+```js
+setInterval(() => {
+  state.list = [
+    ...state.list,
+    getRandomItemFromArray(state.list),
+  ];
+  render(state);
+}, 1000);
+```
+
+export const dynamicAppSrc = 'https://images.ctfassets.net/w1fxlmsi3y1l/5ohjBgY7dKiW8MeEocSkiU/3c304fce334246357cf05db29ff2adce/dynamic_app_result_1.gif';
+
+<BlogImage 
+  imgProps={{ src: dynamicAppSrc, alt: 'Fully re-rendered list of smileys GIF' }}
+  caption="DOM is fully re-rendering every 1 second"
+/>
+
+## Implement vDOM rendering
+
+Okay, now we have dynamic app done with *hyperscript* let’s move on to actual virtual DOM and its implementation. First of all we need to change our *hyperscript* function. Now it should not create real DOM, but instead it rather should create virtual DOM. So, given *nodeName,* *attributes* and *children* we just a create an object with corresponding keys. Thanks to ES6 we can do this in one line:
+
+```js
+export default function hyperscript(nodeName, attributes, ...children) {
+  return { nameName, attributes, chilren };
+}
+```
+
+We have a virtual DOM and if we execute the App function with same emojis list we get something like this(logged in console):
+
+export const vDomLogSrc = 'https://images.ctfassets.net/w1fxlmsi3y1l/4Vjf3xd6VWaAc4UcMe42yw/acbc4f6a7059f056614f179b8a97e1ac/console_log.png';
+
+<BlogImage 
+  imgProps={{ src: vDomLogSrc, alt: 'Logged virtual DOM of simple app into browser console' }}
+  caption={'"Virtual DOM" of our application'}
+/>
+
+Pretty similar to DOM. Now let’s create a function that renders virtual DOM into real DOM. As you might have guessed it should take virtual Node as a parameter. Here it is:
+
+```js
+export const renderNode = vnode => {
+  let el;
+
+  const { nodeName, attributes, children } = vnode;
+
+  if(vnode.split) return document.createTextNode(children);
+
+  el = document.createElement(nodeName);
+
+  for (let key in attributes) {
+    el.setAttribute(key, attributes[key]);
+  }
+
+  (children || []).forEach(child => el.appendChild(renderNode(child)));
+
+  return el;
+};
+```
+
+Let me explain what it does step by step:
+
+1. Using destructuring we retrieve nodeName, attributes and children of virtual Node
+2. If vnode is text(we can check it by *vnode.split*) then we return text Node
+3. Otherwise we create an element with nodeName and set its attributes from *attributes* object
+4. Do the same thing for children if any
+
+Now, remember our *render* function that rendered our **App**? We just need to change a little bit to make it work:
+
+```js
+const newApp = renderNode(App(state));
+```
+
+> This article became a bit longer than I thought, so I decided to break into two parts.
+
+So, let’s recap this. We created a **hyperscript —** *virtual DOM factory*, __renderNode__ — *that turns virtual DOM into DOM element* and a *function component* **App** that creates whole page. The result is now the same as we did it before without virtual DOM, but now we have more control. In the next article we will explore what makes React(and virtual DOM) so fast.
+
+*You can look up all steps in my [GitHub repository](http://bit.ly/2NKXH0V). You can find these steps in branches.*
+
+In the next article we will implement simple **diffing algorithm**, that will make our app faster and you’ll be able to see it action.
