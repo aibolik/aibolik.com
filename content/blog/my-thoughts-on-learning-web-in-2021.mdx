@@ -1,6 +1,66 @@
 ---
 title: My thoughts on learning Web in 2021
-description: Hello, people! You probably already saw or read one of those articles like "Web developer roadmap in 2021", "How to become a web developer", etc. So, I also wanted to share my perspective on this topic
-readTimeInMins: 4
+description: In this article I share three main pillars of the Web and some important and overlooked topics to add to your Web learning path.
+readTimeInMins: 5
 publishedOn: 23-11-2021
 ---
+
+Hello, people! You probably already saw or read one of those articles like "Web developer roadmap in 2021", "How to become a web developer", etc. So, I also wanted to share my perspective on this topic that might be useful to some people who are at the start of their exciting journey or open some discussion with others.
+
+## HTML
+
+I want to start with the most basic and the important, as well as, sometimes, overlooked part of the Web - HTML. Why overlooked? Thanks to some great JavaScript frameworks, like React, web developers frequently deal with “components” rather than HTML elements. However, it is important to understand __semantic HTML__ and __accessibility__ and many more topics. I have to admit that I kickstarted my Web Developer work with React and had to catch up with many important concepts of Web later on. Let’s go over some main of the topics here(in my opinion).
+
+### Semantic HTML and Accessibility
+
+The [simple idea](https://web.dev/accessible/ "Accessibility in web.dev") is to build a site that works for all of your users. By saying “all of your users” I mean: people with disabilities, people with different internet bandwidth, color blindness issues, device issues, or someone who just doesn’t want to(or can't) use a mouse/keyboard. Some pretty obvious things to start with are using semantic HTML elements, such as `button`, `input`, `select`, `nav`, and more. In addition to them, you should be familiar with `aria-*` and `role` attributes, which can add additional context for users with screen readers. And even before starting the development, you can talk with your designer to use contrasting colors and also introduce dark/alternative color schema, if it is worth it. (it is a bit outside of the HTML topic, but still worth mentioning).
+
+> When I was around 10, my mouse was broken on Pentium II Windows 98 PC. Guess what I had to use to be able to navigate through my computer?
+
+### Know your “head” tags
+
+As the subtitle suggests, you should be familiar with what you put on your `head` tag. This and using the right semantic HTML elements can also affect the SEO of your website. Some meta tags can provide additional information about your website(like title, description, data for Twitter card) and some tags can optimize your website. With the `link` tag you can hint your browser to do some work before accessing some resources(prefetch, preconnect). Take some time to get familiar with them and feel free to take these low-hanging fruits for your website optimization.
+
+### Know how your elements look and interact
+
+Other than knowing your “head” tags you should be quite familiar with your main “body” tags. Especially, what do they imply and how they interact. For example, consider these:
+
+- the default styling of elements(margins on paragraph, font size, and margins on h1-h6 tags, styling of anchors)
+- interactive elements(those are accessible with TAB, like anchor, button, etc.) and how to make one yourself
+- other accessibility features, like outlined button
+- transition when clicking on the anchor
+
+These are kinda basic, but you might also want to familiarize yourself with more HTML5 elements, and maybe some new elements like `dialog` those let you create modals out of the box.
+
+I believe there are many topics that I left not mentioning here about HTML, but I wouldn’t be able to put everything in this article. So, if I missed something important, please feel free to leave a comment or mention it tagging me on Twitter([@aibolik_](https://twitter.com/aibolik_ "Aibol's twitter account")).
+
+## CSS
+
+When it comes to CSS, today, we already have different tools to pre- and post-process our “style code” to make our lives easier. But the essential knowledge of CSS remains the key. These are the basic concepts related to laying out elements and styling of them: box-model, positioning, responsive styles, different laying out strategies(flex, grid), transform and transition of properties, and more. But if we go a bit further, it is worth exploring these topics too.
+
+### Logical properties
+
+These might not be relevant to the project you are working on, but if your website supports multiple locales, which include right-to-left and/or vertical top-down layouts, you should be familiar with these properties. Shortly, these properties [adapt to the layout](https://web.dev/logical-property-shorthands/ "Web.dev article about Logical Properties") of the page. You don’t explicitly set right/left/top/bottom spacing, you set start/end spacing and the browser will take care of setting the exact side for you.
+
+> Alternatively, if you are working on an open-source (popular) components library, chances are that your design would also be used in websites, where they need [“rtl”](https://developer.mozilla.org/en-US/docs/Web/CSS/direction "Documentation about `direction` in MDN") support. 
+
+### CSS variables
+
+When I first heard about CSS variables, the support for them was not good. However, these days all modern browsers support this feature. At first, some might think it is similar to variables in other CSS post-processors(like LESS or SASS), however, they possess more power than you thought. You can easily rewrite them for some selector, media query, or even with JavaScript(because they are still CSS properties). They are quite useful when building (several) [color schemas](https://web.dev/building-a-color-scheme/ "Web.dev article about building a color scheme with CSS variables"). But they are also useful for many different things, I saw people using them in very creative ways. It is worth checking out its capabilities.
+
+Again here, CSS is another big topic in the Web world. There are also topics like typography and fonts, selector naming conventions, many different CSS frameworks, CSS-in-JS, and more. I can not cover all of them in this article, but case by case, some might be more relevant than others, and for some topics, it is enough to just have a basic understanding of the principles.
+
+## JavaScript
+
+Yet another big topic and I believe the one that is more over-hyped than the other 2 pillars of the Web(thanks again to JS frameworks). Since it is a full-blown programming language it is essential to understand how it works. In addition to how JavaScript works, for Web Developer, it is essential to understand how it works in a browser context. Some points to mention:
+
+- interaction with DOM API
+- event handling
+- browser APIs(history, fetch, IntersectionObserver, storage APIs, and more)
+- [and many many more topics](https://javascript.info/ "Website about JavaScript(from simple to advanced concepts)")
+
+Even if popular JavaScript frameworks give a real boost in Web Development, the core JavaScript knowledge is still very important. Even if you start very well with some JavaScript framework, at some point you might end up not understanding how some things function. I was in that shoe, and when I was interviewed for one project where essential JavaScript knowledge was important, I awfully failed that interview. Immediately after that interview, I decided to level up my core JavaScript knowledge and discovered the [“You don’t know JS”](https://github.com/getify/You-Dont-Know-JS "You don't know JS book in GitHub") book series. It was a really good time investment and I highly recommend it for people who feel they have gaps in their JavaScript knowledge.
+
+This is a small portion of my thoughts regarding the Web topic. I hope to share more of my thoughts and learnings, so if you liked the content, feel free to [follow me on Twitter](https://twitter.com/intent/follow?screen_name=aibolik_ "Follow Aibol on Twitter"), where I will share everything I write. 
+
+Stay tuned and thanks for reading!

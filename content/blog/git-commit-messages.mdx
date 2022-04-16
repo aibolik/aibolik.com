@@ -1,6 +1,135 @@
 ---
 title: Git commit messages
-description:  I want to cover the thing that every active developer faces everyday probably multiple times from 1 to 10, 20, 30 times a day. So I will talk about Git commit messages.
+description:  I want to cover the thing that every active developer faces everyday probably multiple times from 1 to 10, 20, 30 times a day. So I will talk about Git commit messages and how to write them, so you will thank yourself in the future.
 publishedOn: 19-12-2018
-readTimeInMins: 5
+readTimeInMins: 4
 ---
+
+I managed to write this post long time ago, but just now I found some time to write it. I want to cover the thing that every active developer faces everyday probably multiple times from 1 to 10, 20, 30 times a day. So I will talk about __Git commit messages__. 
+
+There are probably many articles covering this topic, anyway I don't want to force my vision how this should be handled, but instead share some practices I acquired from *seeing problem in this area*, *looking for some solutions* and *applying them in practice*. 
+
+Main source of knowledge was [article of one company][1] practicing writing commit messages as in AngularJS library. Here is their [Git commit message conventions][2]. I will add some more points to it as well as summarizing their message.
+
+## Identifying a problem
+
+export const badCommitsImgProps = {
+  src: 'https://images.ctfassets.net/w1fxlmsi3y1l/5Tl26UcojC8imk06GS6KaK/28ace52aa5dca238ae650e8b9c8b7ba2/git_commit_2x.png',
+  alt: 'Screenshot of badly writen commit messages',
+};
+
+<BlogImage 
+  imgProps={badCommitsImgProps}
+  caption="Example of really bad commit messages"
+/>
+
+If you search for *worst commit messages* you can find many examples. I hope you don't, but just take a look [here][3]. These changes don't make sense what has been done. 
+
+export const angularCommitMessagesImgProps = {
+  src: 'https://images.ctfassets.net/w1fxlmsi3y1l/4Wx8X8TeMEeimWmew4EYiu/44bc3b2d03aefad707b9933ac0db5608/Screen_Shot_2018-12-20_at_8.21.11_AM.png',
+  alt: 'Screenshot of commit messages from AngularJS project',
+};
+
+<BlogImage 
+  imgProps={angularCommitMessagesImgProps}
+  caption="Example of commit messages from Angular project"
+/>
+
+But there are some better messages, those make sense what has been done. However, sometimes there is no *__context__* in them - where the change was applied. Of course you can take a look at what has changed, but isn't it faster just to read one line, rather than inspecting bunch of changed lines?
+
+So, there is definitely a problem. I will share some my suggestions how it should be handled, and then some resources where from I adopted some practices and modified some.
+
+## Adopted practices
+
+### Use editor, not CLI
+
+This one is probably obvious at the same time a little bit time consuming, but it is really easier to write in some editor, rather than writing everything in one line in CLI after `git commit -m "..."`. 
+
+Set it to your favorite editor, but keep in mind that some *visually rich* editors(like VSCode) might have useful plugins those will hint on some best practices.
+
+To change default editor configuration for your git, write this command:
+
+`git config --global core.editor "code --wait"`
+
+This will set VSCode as a default editor for commit messages.
+
+> *__Note__*: you should have VSCode configured to run from CLI.
+
+As a bonus, in VSCode you will also see staged files as a comment in `COMMIT_MSG`, those will be ignored in original commit. Additionally there is a built-in plugin, that will show when your commit message length is getting too long.
+
+### Structure your first line
+
+Probably you have already seen some structures for commit messages. I propse you to take a look at [AngularJS Git Commit Message Conventions][2]. Here are key takeaways about subject line:
+
+- your commit message should consist of 3 parts
+```
+<type>(<scope>): <subject>
+```
+- `<type>` - the type of the made changes. Should be one of:
+  - `feat` - some feature development
+  - `fix` - bug fix
+  - `docs` - changes in documentation
+  - `style` - formatting changes
+  - `refactor` - changes those do not fix a bug or implement a feature. Simple refactoring
+  - `test` - changes to tests or addition of new ones
+  - `chore` - any other changes, not affecting code
+- `<scope>` - here you define the scope of changes. For example: featureA, buildConfig, or any other scope you can think of.
+- `<subject>` - there are different methodologies to write the subject, but the main rules are as follows:
+  - use imperative, present tense. "fix" not "fixed", "add" not "added". By the way, Git also uses this convention for its own preformateed messages("Merge pull request...").
+  - don't capitalize first letter
+  - do not add dot(.) at the end of subject
+
+At first it might be harder to maintain this style, but you will get used to. If you are having troubles remembering all of these you can use library that does it for you. Take a look at [commitizen][4].
+
+> Sometimes, you might want more type of changes. In this case feel free to add up more, just be sure to coordinate it with your team and document it somewhere.
+
+### Add message body and footer when necessary
+
+In some cases you probably want to leave more clues in your commit message. For this purpose use message body. It typically goes after subject line and is divided from it by one empty line. It should also follow the rule of using imperative tense in verbs.
+
+Footer is mostly ignored, but in some cases it can be useful to add up some meta information. You can use it to mention *breaking changes* and list the issues it closes in your issue tracker. For examples: *Closes #132, #123*.
+
+Here are examples from AngularJS project:
+
+```
+feat($browser): onUrlChange event (popstate/hashchange/polling)
+
+Added new event to $browser:
+- forward popstate event if available
+- forward hashchange event if popstate not available
+- do polling when neither popstate nor hashchange available
+
+Breaks $browser.onHashChange, which was removed (use onUrlChange instead)
+```
+
+```
+fix($compile): couple of unit tests for IE9
+
+Older IEs serialize html uppercased, but IE9 does not...
+Would be better to expect case insensitive, unfortunately jasmine does
+not allow to user regexps for throw expectations.
+
+Closes #392
+Breaks foo.bar api, foo.baz should be used instead
+```
+
+## Conclusion
+
+These are mostly recommendations - not a strict policy. You would probably want to adjust these practices to your own needs. Finally, it is your project, your repository, your code - setup your own guidelines and stick to them. If this article was helpful I reached my goal. Thanks for reading!
+
+## Resources
+
+- [AnviLabs: Writing practical commit messages][1]
+- [AngularJS Git Commit Message Conventions][2]
+- [Reddit Topic about worst commit messages][3]
+- [Commitizen][4]
+- [A Note About Git Commit Messages][5]
+- [Writing Git commit messages][6]
+
+
+[1]: https://anvilabs.co/blog/writing-practical-commit-messages/
+[2]: https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit
+[3]: https://www.reddit.com/r/ProgrammerHumor/comments/375fjr/whats_the_most_humorous_commit_message_youve_ever/
+[4]: http://commitizen.github.io/cz-cli/
+[5]: https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
+[6]: http://365git.tumblr.com/post/3308646748/writing-git-commit-messages
