@@ -1,12 +1,5 @@
-import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "remix";
-import type { MetaFunction, LinksFunction } from "remix";
+import type { LinksFunction, MetaFunction } from "@remix-run/node";
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
 
 import globalStylesUrl from './styles/global.css';
 import customResetUrl from './styles/custom-reset.css';

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link } from 'remix';
+import { Link } from "@remix-run/react";
 import styled from 'styled-components';
 import { themeGet } from '~/utils/theme-get';
 import { Logo } from './logo';

@@ -1,4 +1,5 @@
-import { LoaderFunction, useLoaderData } from 'remix';
+import { LoaderFunction } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 import styled from 'styled-components';
 import { Footer } from '~/components/footer';
 import { Header } from '~/components/header';

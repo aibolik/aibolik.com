@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { LoaderFunction, MetaFunction, useLoaderData } from 'remix';
+import { LoaderFunction, MetaFunction } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 import { MdxPage } from "~/types"
 import { getMdxPage } from "~/utils/mdx.server"
 import { getMDXComponent } from 'mdx-bundler/client';

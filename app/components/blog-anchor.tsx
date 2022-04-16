@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { Link } from 'remix';
+import { Link } from "@remix-run/react";
 
 const anchorStyles = css`
   text-decoration: none;
