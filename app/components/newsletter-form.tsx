@@ -4,6 +4,7 @@ import { MaxWidthWrapper } from './max-width-wrapper';
 import { Spacer } from './spacer';
 import NewsletterIcon from '~/assets/newsletter-icon.svg';
 import { themeGet } from '~/utils/theme-get';
+import { useFetcher } from '@remix-run/react';
 
 const Heading = styled.h2`
   font-weight: var(--font-weight-semibold);
@@ -37,7 +38,7 @@ const Icon = styled.img`
   }
 `;
 
-const EmailInputForm = styled.form`
+const EmailInputContainer = styled.div`
   display: flex;
 
   @media ${themeGet('breakpoints.mobile')} {
@@ -55,6 +56,8 @@ const Input = styled.input`
   border: none;
   border-bottom: 1px solid var(--color-white);
   min-width: 350px;
+  color: var(--color-body-text);
+
   ::placeholder {
     ${placeholderCss}
   }
@@ -88,25 +91,31 @@ const CTAButton = styled.button`
   }
 `;
 
-const EmailForm: React.FC = () => {
-
-  return (
-    <EmailInputForm>
-      <Input name="email" type="email" placeholder="Your email" />
-      <Spacer $size={32} $axis="horizontal" />
-      <CTAButton>
-        Subscribe
-      </CTAButton>
-    </EmailInputForm>
-  );
-}
-
 const NewsletterForm: React.FC = () => {
+  const newsletter = useFetcher();
+
+  React.useEffect(() => {
+    console.log(newsletter.data);
+
+    if (newsletter.data?.error) {
+      alert(newsletter.data.error);
+    }
+  }, [newsletter.data]);
 
   return (
     <MaxWidthWrapper>
       <Wrapper>
         <div>
+          {newsletter.data?.success ? (
+            <>
+              <Heading>Done!</Heading>
+              <Spacer $size={24} />
+              <p>
+                Thanks for subscribing! You will shortly start receiving updates from me.
+              </p>
+            </>
+          ) :
+          (<>
           <Heading>
             Get updates about new posts
           </Heading>
@@ -115,7 +124,22 @@ const NewsletterForm: React.FC = () => {
             I committed to share more this year, so if you don’t want to miss anything, please subscribe to my newsletter. I hope you will enjoy the content!
           </p>
           <Spacer $size={16} />
-          <EmailForm />
+          {/* TODO: error boundary when submitting a form */}
+          <newsletter.Form method='post' action='/new-subscriber'>
+            <EmailInputContainer>
+              <Input
+                name="email"
+                type="email"
+                placeholder="Your email"
+              />
+              <Spacer $size={32} $axis="horizontal" />
+              <CTAButton disabled={newsletter.state === 'submitting'}>
+                {/* TODO: add here a disabled state or loading indicator */}
+                Subscribe
+              </CTAButton>
+            </EmailInputContainer>
+          </newsletter.Form>
+          </>)}
         </div>
         <div>
           <Icon alt="" src={NewsletterIcon} />

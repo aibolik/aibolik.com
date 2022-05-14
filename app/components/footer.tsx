@@ -70,14 +70,14 @@ const BLOG_LINKS = [
     name: 'All posts',
     link: '/all',
   },
-  {
-    name: 'Topics',
-    link: '/topics',
-  },
-  {
-    name: 'Short writes',
-    link: '/short-writes',
-  },
+  // {
+  //   name: 'Topics',
+  //   link: '/topics',
+  // },
+  // {
+  //   name: 'Short writes',
+  //   link: '/short-writes',
+  // },
   {
     name: 'Who is Aibol?',
     link: '/me',

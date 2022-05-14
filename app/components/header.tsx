@@ -8,9 +8,9 @@ import { Stack } from './stack';
 import { HamburgerMenuIcon, Cross1Icon as MenuCloseIcon } from '@radix-ui/react-icons';
 
 const LINKS = [
-  { name: 'All posts', to: '/all'},
-  { name: 'Topics', to: '/topics'},
-  { name: 'Short writes', to: '/short-writes'},
+  { name: 'All posts', to: '/'},
+  // { name: 'Topics', to: '/topics'},
+  // { name: 'Short writes', to: '/short-writes'},
   { name: 'Who is Aibol?', to: '/me'},
 ]
 
