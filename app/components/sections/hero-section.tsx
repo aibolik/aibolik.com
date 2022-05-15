@@ -1,5 +1,6 @@
 import * as React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
+import { Wave } from '~/sc/Wave';
 import { themeGet } from '~/utils/theme-get';
 import { MaxWidthWrapper } from '../max-width-wrapper';
 
@@ -30,35 +31,6 @@ const IntroText = styled.div`
   font-size: 2rem;
   line-height: 1.6;
   max-width: 690px;
-`;
-
-const waving = keyframes`
-
-  12% {
-    transform: rotate(-10deg);
-  }
-
-  24% {
-    transform: rotate(10deg);
-  }
-
-  36% {
-    transform: rotate(-10deg);
-  }
-
-  48% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(0deg);
-  }
-`;
-
-const Wave = styled.span`
-  display: inline-block;
-  transform-origin: bottom right;
-  animation: ${waving} 3s ease-in-out 2s infinite;
 `;
 
 const Creative = styled.span`

@@ -68,7 +68,7 @@ const LINKS = [
 const BLOG_LINKS = [
   {
     name: 'All posts',
-    link: '/all',
+    link: '/',
   },
   // {
   //   name: 'Topics',
