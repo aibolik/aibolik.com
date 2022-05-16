@@ -84,7 +84,7 @@ const BLOG_LINKS = [
   },
 ];
 
-const COPYRIGHT_TEXT = `© 2022-presnt, Aibol Kussain.`;
+const COPYRIGHT_TEXT = `© 2022-present, Aibol Kussain.`;
 
 const Footer: React.FC = () => {
 

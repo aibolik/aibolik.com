@@ -17,10 +17,24 @@ import { InlineCode } from '~/components/inline-code';
 import { OrderedList, ListItem, UnorderedList } from '~/components/lists';
 import { Blockquote } from '~/components/blockquote';
 import { MainContent } from '~/sc/MainContent';
+import { DynamicLinksFunction } from '../utils/dynamic-links';
 
 type LoaderData = {
   page: MdxPage;
+  canonicalUrl: string;
 }
+
+const dynamicLinks: DynamicLinksFunction<LoaderData> = ({ data }) => {
+  return [
+    {
+      rel: 'canonical', href: data.canonicalUrl,
+    },
+  ];
+}
+
+export const handle = {
+  dynamicLinks,
+};
 
 export const loader: LoaderFunction = async ({ params }) => {
   if (!params.slug) {
@@ -29,8 +43,11 @@ export const loader: LoaderFunction = async ({ params }) => {
 
   const page = await getMdxPage('blog', params.slug);
 
+  const canonicalUrl = `https://aibolik.com/blog/${params.slug}`;
+
   const data: LoaderData = {
     page,
+    canonicalUrl,
   };
 
   return data;
@@ -81,9 +98,9 @@ const mdxComponents = {
 };
 
 export default function BlogPage() {
-  const data = useLoaderData<LoaderData>();
+  const { page } = useLoaderData<LoaderData>();
 
-  const { code, frontmatter } = data.page;
+  const { code, frontmatter } = page;
 
   const Component = React.useMemo(() => getMDXComponent(code), [code]);
 
@@ -111,5 +128,4 @@ export default function BlogPage() {
       <Footer />
     </div>
   );
-
 }

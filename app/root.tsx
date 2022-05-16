@@ -5,6 +5,7 @@ import globalStylesUrl from './styles/global.css';
 import customResetUrl from './styles/custom-reset.css';
 import { radixColorsLinks } from './styles/colors.links';
 import { ThemeProvider } from "./components/core/theme-provider";
+import { DynamicLinks } from "./utils/dynamic-links";
 
 export const links: LinksFunction = () => {
 
@@ -46,6 +47,7 @@ export default function App() {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
+        <DynamicLinks />
         <Links />
         {typeof document === "undefined" ? "__STYLES__" : null}
       </head>
