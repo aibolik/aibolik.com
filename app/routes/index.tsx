@@ -1,4 +1,4 @@
-import { LoaderFunction } from "@remix-run/node";
+import { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import styled from 'styled-components';
 import { Footer } from '~/components/footer';
@@ -14,6 +14,12 @@ import { themeGet } from '~/utils/theme-get';
 
 type LoaderData = {
   blogPosts: MdxListItem[];
+}
+
+export const meta: MetaFunction = () => {
+  return {
+    'google-site-verification': 'Kg1ly6JGxkq2q6kjdbRwp5FyTsE5PTVRrhmlwxoMYIw',
+  };
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
