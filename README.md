@@ -2,6 +2,10 @@
 
 - [Remix Docs](https://remix.run/docs)
 
+## Environment variables and Secrets
+
+Environment variables and Secrets in production are managed through [fly.io](https://fly.io/docs/reference/secrets/). If you need to have something locally, just put it in `.env` file but DON'T COMMIT it.
+
 ## Development
 
 From your terminal:

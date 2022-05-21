@@ -1,11 +1,20 @@
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
-import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
+import { json, LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "@remix-run/react";
 
 import globalStylesUrl from './styles/global.css';
 import customResetUrl from './styles/custom-reset.css';
 import { radixColorsLinks } from './styles/colors.links';
 import { ThemeProvider } from "./components/core/theme-provider";
 import { DynamicLinks } from "./utils/dynamic-links";
+import { GaAnalytics } from "./utils/analytics/ga";
+
+export const loader: LoaderFunction = async () => {
+  return json({
+    ENV: {
+      ENVIRONMENT: process.env.NODE_ENV === 'production' ? 'production' : 'local',
+    },
+  });
+}
 
 export const links: LinksFunction = () => {
 
@@ -40,10 +49,12 @@ export const meta: MetaFunction = () => {
 };
 
 export default function App() {
+  const data = useLoaderData();
 
   return (
     <html lang="en">
       <head>
+        <GaAnalytics />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
@@ -55,6 +66,9 @@ export default function App() {
         <ThemeProvider>
           <Outlet />
           <ScrollRestoration />
+          <script dangerouslySetInnerHTML={{
+            __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
+          }} />
           <Scripts />
           {process.env.NODE_ENV === "development" && <LiveReload />}
         </ThemeProvider>

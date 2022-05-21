@@ -18,3 +18,11 @@ export type {
   MdxPage,
   MdxListItem,
 };
+
+declare global {
+  interface Window {
+    ENV: {
+      ENVIRONMENT: 'local' | 'production',
+    }
+  }
+};
