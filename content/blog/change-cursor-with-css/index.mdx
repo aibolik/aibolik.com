@@ -1,0 +1,57 @@
+---
+title: How to change the cursor to custom icon
+description: In this post you will discover how to change the cursor icon to a custom icon using CSS with some interactive demos and code samples.
+readTimeInMins: 3
+publishedOn: 29-05-2022
+isDraft: false
+---
+
+Recently, I was working on an interesting project where I neded to change the cursor icon to some custom image. I had no idea that you can use custom images and icons for a cursor other than pre-built available cursors in browser. So, let's dive deep into the different ways you can customise your cursor icon with some interactive demos.
+
+> Note that examples in this page will not work for touch devices.
+
+## Change cursor to pre-built cursor icons
+
+Browsers already have a lot of pre-built icons for cursor. You might have seen or used `cursor: pointer;` a lot, which makes elements to behave like buttons or links. But there are more than 20 pre-built cursors you can use, to better signal the state of the UI. Here are some examples, where I used different pre-built cursor icons:
+
+import { DemoUsingInlineSvg, DemoUsingPrebuiltIcons, DemoWithCoordinates } from './demos';
+
+```css
+.wait {
+  cursor: wait;
+}
+
+.zoom-in {
+  cursor: zoom-in;
+}
+
+.not-allowed {
+  cursor: not-allowed;
+}
+```
+
+<DemoUsingPrebuiltIcons />
+
+> Refer to [this example](https://chrisnager.github.io/cursors/) by [Chris Nager](https://twitter.com/chrisnager) for ALL examples of built-in cursor icons.
+
+## Change cursor using `url` and SVG
+
+You might want to use custom cursor image in cases where you need to have custom cursor icons for tools in your canvas. `cursor` CSS property allows you to put `url` with an image reference. For cursor it might be a good idea to go for Scaled Vector Graphics so that your cursor will look sharp and not blurry. Just give the SVG name and optional coordinates for a `cursor` CSS property wrapped in `url` helper:
+
+```css
+.box {
+  cursor: url(brush.svg), auto;
+}
+```
+
+<DemoUsingInlineSvg headline="Hover over the text below" />
+
+> Note that if your image/icon is too big it won't work because of image size limits enforced by browsers. General recommendation is to use 32x32 pixels images.
+
+### Optional coordinates for custom image cursors
+
+One thing to be aware when using custom images, is that you might need to adjust the tip of the cursor, since it might not be at its default position(top-left corner). To fix that in our previous demo, you just need to add *optional* coordinates to the used image. For our brush icon it would be something like this `cursor: url(brush.svg) 2 22, auto;`. Take a look at the updated examples below, where I added a hint to show the tip of the cursor:
+
+<DemoWithCoordinates />
+
+That's it about the topic. There is not really much to talk about when it comes to styling cursor with CSS. But I hope this one comes handy when you need to deal with it. If you liked the post and/or have any questions feel free to ask in twitter tagging my nickname [@aibolik_](https://twitter.com/aibolik_).
