@@ -55,7 +55,6 @@ const DemoUsingInlineSvg = ({ cursorPos = '', showPointer = false, headline }: D
     }
     const x = e.clientX - 8;
     const y = e.clientY - 8;
-    console.log(`x: ${x}; y: ${y}`);
     el.style.left = `${x}px`;
     el.style.top = `${y}px`;
   }
