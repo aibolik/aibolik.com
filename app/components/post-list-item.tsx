@@ -12,9 +12,9 @@ const LinkWrapper = styled(Link)`
   display: block;
   color: var(--color-body-text);
   text-decoration: none;
-  padding: 24px;
-  margin-left: -24px;
-  margin-right: -24px;
+  padding: 16px;
+  margin-left: -16px;
+  margin-right: -16px;
   border-radius: 4px;
 
   transition: background 150ms, transform 150ms;

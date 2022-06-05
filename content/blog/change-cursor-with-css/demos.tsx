@@ -46,6 +46,17 @@ const DemoUsingInlineSvg = ({ cursorPos = '', showPointer = false, headline }: D
   const [isIn, setIsIn] = React.useState(false);
   const pointerRef = React.useRef<HTMLSpanElement>(null);
 
+  const scrollHandler = React.useCallback(() => {
+    setIsIn(false);
+  }, [setIsIn]);
+
+  React.useEffect(() => {
+    window.addEventListener('scroll', scrollHandler);
+
+    return () => {
+      window.removeEventListener('scroll', scrollHandler);
+    }
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     const el = pointerRef?.current;

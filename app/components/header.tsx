@@ -134,12 +134,12 @@ const Header: React.FC = () => {
   const open = React.useCallback(() => {
     setOpen(true);
     document.body.classList.add('no-scroll');
-  }, []);
+  }, [setOpen]);
 
   const close = React.useCallback(() => {
     setOpen(false);
     document.body.classList.remove('no-scroll');
-  }, []);
+  }, [setOpen]);
 
   return (
     <MaxWidthWrapper>
