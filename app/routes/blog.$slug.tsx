@@ -56,11 +56,12 @@ export const loader: LoaderFunction = async ({ params }) => {
 export const meta: MetaFunction = ({ data }) => {
   const { frontmatter } = data.page;
 
-  const { title } = frontmatter;
+  const { title, description } = frontmatter;
 
 
   return {
     title,
+    description,
   };
 }
 
