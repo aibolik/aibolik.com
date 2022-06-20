@@ -49,7 +49,7 @@ const EmailInputContainer = styled.div`
 const placeholderCss = css`
   color: var(--color-body-text);
   font-style: italic;
-`
+`;
 
 const Input = styled.input`
   background: transparent;

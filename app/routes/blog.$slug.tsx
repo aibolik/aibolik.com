@@ -18,6 +18,7 @@ import { OrderedList, ListItem, UnorderedList } from '~/components/lists';
 import { Blockquote } from '~/components/blockquote';
 import { MainContent } from '~/sc/MainContent';
 import { DynamicLinksFunction } from '../utils/dynamic-links';
+import { BlogNewsletterForm } from '~/components/blog/blog-newsletter-form';
 
 type LoaderData = {
   page: MdxPage;
@@ -126,6 +127,8 @@ export default function BlogPage() {
         </MainContent>
       </MaxWidthWrapper>
       <Spacer $size={64} />
+      <BlogNewsletterForm />
+      <Spacer $size={96} />
       <Footer />
     </div>
   );

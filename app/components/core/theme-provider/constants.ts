@@ -11,6 +11,11 @@ export const breakpoints = {
    */
   mdAndSmaller: `(max-width: 768px)`,
 
+
+  smallDesktop: `(min-width: 769px) and (max-width: 1023px)`,
+
+  largeDesktop: `(min-width: 1024px)`,
+
   /**
    * Generic breakpoints for most of things
    * to be divided mobile/desktop
