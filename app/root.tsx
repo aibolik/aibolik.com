@@ -9,6 +9,7 @@ import { DynamicLinks } from "./utils/dynamic-links";
 import { GaAnalytics } from "./utils/analytics/ga";
 
 export const loader: LoaderFunction = async () => {
+  console.log(`NODE_ENV`, process.env.NODE_ENV);
   return json({
     ENV: {
       ENVIRONMENT: process.env.NODE_ENV === 'production' ? 'production' : 'local',

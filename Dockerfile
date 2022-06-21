@@ -1,6 +1,7 @@
 # base node image
 FROM node:16 as base
 
+ENV NODE_ENV production
 # Install openssl for Prisma
 # RUN apt-get update && apt-get install -y openssl
 
@@ -26,8 +27,6 @@ RUN npm prune --production
 # Build the app
 FROM base as build
 
-ENV NODE_ENV=production
-
 RUN mkdir /app
 WORKDIR /app
 
@@ -43,8 +42,6 @@ RUN npm run build
 # Finally, build the production image with minimal footprint
 FROM base
 
-ENV NODE_ENV=production
-
 RUN mkdir /app
 WORKDIR /app
 
@@ -57,4 +54,4 @@ COPY --from=build /app/build /app/build
 COPY --from=build /app/public /app/public
 ADD . .
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "start"]
