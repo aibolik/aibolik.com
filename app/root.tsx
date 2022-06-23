@@ -6,7 +6,7 @@ import customResetUrl from './styles/custom-reset.css';
 import { radixColorsLinks } from './styles/colors.links';
 import { ThemeProvider } from "./components/core/theme-provider";
 import { DynamicLinks } from "./utils/dynamic-links";
-import { GaAnalytics } from "./utils/analytics/ga";
+import { GTMNoScript, GTMScript } from "./utils/analytics/gtm";
 
 export const loader: LoaderFunction = async () => {
   console.log(`NODE_ENV`, process.env.NODE_ENV);
@@ -55,7 +55,7 @@ export default function App() {
   return (
     <html lang="en">
       <head>
-        <GaAnalytics />
+        <GTMScript />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
@@ -64,6 +64,7 @@ export default function App() {
         {typeof document === "undefined" ? "__STYLES__" : null}
       </head>
       <body className="dark-theme">
+        <GTMNoScript />
         <ThemeProvider>
           <Outlet />
           <ScrollRestoration />
