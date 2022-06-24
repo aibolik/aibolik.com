@@ -5,6 +5,7 @@ import { Spacer } from './spacer';
 import NewsletterIcon from '~/assets/newsletter-icon.svg';
 import { themeGet } from '~/utils/theme-get';
 import { useFetcher } from '@remix-run/react';
+import { useNewsletterTracking } from '~/hooks/analytics/track-newsletter';
 
 const Heading = styled.h2`
   font-weight: var(--font-weight-semibold);
@@ -91,16 +92,21 @@ const CTAButton = styled.button`
   }
 `;
 
+const GTM_DEFAULT_PROPS = {
+  form_position: 'homepage_bottom',
+  form_location: 'homepage',
+};
+
 const NewsletterForm: React.FC = () => {
   const newsletter = useFetcher();
 
   React.useEffect(() => {
-    console.log(newsletter.data);
-
     if (newsletter.data?.error) {
       alert(newsletter.data.error);
     }
   }, [newsletter.data]);
+
+  useNewsletterTracking(newsletter, GTM_DEFAULT_PROPS);
 
   return (
     <MaxWidthWrapper>

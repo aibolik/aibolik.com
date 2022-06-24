@@ -5,6 +5,7 @@ import { themeGet } from '~/utils/theme-get';
 import { Spacer } from '../spacer';
 import { useFetcher } from '@remix-run/react';
 import NewsletterIcon from '~/assets/newsletter-icon.svg';
+import { useNewsletterTracking } from '~/hooks/analytics/track-newsletter';
 
 const Wrapper = styled.div`
   max-width: 725px;
@@ -94,8 +95,21 @@ const CTAButton = styled.button`
   }
 `;
 
+const GTM_DEFAULT_PROPS = {
+  form_position: 'article_bottom',
+  form_location: 'article',
+};
+
 const BlogNewsletterForm: React.FC = () => {
   const newsletter = useFetcher();
+
+  React.useEffect(() => {
+    if (newsletter.data?.error) {
+      alert(newsletter.data.error);
+    }
+  }, [newsletter.data]);
+
+  useNewsletterTracking(newsletter, GTM_DEFAULT_PROPS);
 
   return (
     <MaxWidthWrapper>
