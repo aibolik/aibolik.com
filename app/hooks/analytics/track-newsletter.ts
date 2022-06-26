@@ -7,6 +7,13 @@ const NEWSLETTER_EVENTS = {
   FAILURE: 'newsletter_form_failure',
 };
 
+/**
+ * When tracking, use camelCase for keys and snake_case for values
+ * 
+ * @param form 
+ * @param defaultProps 
+ */
+
 function useNewsletterTracking(form: Fetcher<any>, defaultProps: object) {
   useEffect(() => {
     window.dataLayer = window.dataLayer || [];
@@ -19,13 +26,13 @@ function useNewsletterTracking(form: Fetcher<any>, defaultProps: object) {
       } else if(form.data?.error) {
         window.dataLayer.push({
           event: NEWSLETTER_EVENTS.FAILURE,
-          error_type: 'regex',
+          errorType: 'regex',
           ...defaultProps,
         });
       } else {
         window.dataLayer.push({
           event: NEWSLETTER_EVENTS.FAILURE,
-          error_type: 'unknown',
+          errorType: 'unknown',
           ...defaultProps,
         });
       }

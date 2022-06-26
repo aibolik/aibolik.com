@@ -93,8 +93,8 @@ const CTAButton = styled.button`
 `;
 
 const GTM_DEFAULT_PROPS = {
-  form_position: 'homepage_bottom',
-  form_location: 'homepage',
+  formPosition: 'homepage_bottom',
+  formLocation: 'homepage',
 };
 
 const NewsletterForm: React.FC = () => {

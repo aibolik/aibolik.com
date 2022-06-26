@@ -96,8 +96,8 @@ const CTAButton = styled.button`
 `;
 
 const GTM_DEFAULT_PROPS = {
-  form_position: 'article_bottom',
-  form_location: 'article',
+  formPosition: 'article_bottom',
+  formLocation: 'article',
 };
 
 const BlogNewsletterForm: React.FC = () => {
