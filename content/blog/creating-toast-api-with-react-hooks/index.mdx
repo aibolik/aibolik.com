@@ -18,7 +18,9 @@ In this blog post we will be gradually creating fully working Toast API and we w
 
 Let's start by creating simple Toast component. It should be simple nice looking box that renders some content. For simplicity of this application, let that content be just a text.
 
-> I will use [`styled-components`](https://www.styled-components.com/) in this example for styling.
+<Callout>
+  I will use [`styled-components`](https://www.styled-components.com/) in this example for styling.
+</Callout>
 
 ```jsx {1,3,5-9}
 const Wrapper = styled.div`
@@ -46,7 +48,9 @@ Now we have basic Toast, you can test it out by rendering `<Toast>Example</Toast
 
 Usually, there can be several toasts at the same time and they are positioned at some corner of the page. Therefore, it makes sense to create `ToastContainer` component, that will be responsible for toasts positioning and rendering them in a sequence. 
 
-> For simplicity, let's assume that toast notifications will always be rendered at top right corner. If you want it to be more customizable, `ToastContainer` is a right place for this.
+<Callout>
+  For simplicity, let's assume that toast notifications will always be rendered at top right corner. If you want it to be more customizable, `ToastContainer` is a right place for this.
+</Callout>
 
 Additionally, in order to not mess with z-index, it is better to render components like toasts somewhere up in a DOM tree. In our example we will render them directly inside `body` of the page. We can easily accomplish this using [ReactDOM's `createPortal` API](https://reactjs.org/docs/portals.html).
 
@@ -108,7 +112,9 @@ const ToastProvider = ({ children }) => {
 }
 ```
 
-> Note the usage of [functional update](https://reactjs.org/docs/hooks-reference.html#functional-updates) of `setToasts`. We need to use that, since new toasts array is computed using previous state.
+<Callout>
+  Note the usage of [functional update](https://reactjs.org/docs/hooks-reference.html#functional-updates) of `setToasts`. We need to use that, since new toasts array is computed using previous state.
+</Callout>
 
 I used `useCallback`, as a small optimization. We don't need to recreate this function on every render, therefore we use `useCallback` hook. Read more about it in [React's hooks documentation](https://reactjs.org/docs/hooks-reference.html#usecallback).
 
@@ -202,7 +208,9 @@ We can add toasts with `addToast` and now they need to be automatically dismisse
 
 We need to fire a `setTimeout` with a call to `removeToast` after delay. The best way we can do this is using [`useEffect` hook](https://reactjs.org/docs/hooks-reference.html#useeffect).
 
-> Side note about `useEffect`: it will run passed callback function whenever one of dependencies changes. 
+<Callout>
+  Side note about `useEffect`: it will run passed callback function whenever one of dependencies changes. 
+</Callout>
 
 So, we will use `removeToast` and `id` in dependencies list for this *effect*, since everything used inside the function should be passed as a dependency. We assume(and know) that `id` and `removeToast` function won't change, that means the *effect* will only be called upon first render. Let's see how it looks in code:
 
@@ -224,7 +232,9 @@ const Toast = ({ children, id }) => {
 }
 ```
 
-> Note the [clean up function](https://reactjs.org/docs/hooks-reference.html#cleaning-up-an-effect) in `useEffect`: we need to clean up timer, so that it won't cause errors in case of unexpected removal of component.
+<Callout>
+  Note the [clean up function](https://reactjs.org/docs/hooks-reference.html#cleaning-up-an-effect) in `useEffect`: we need to clean up timer, so that it won't cause errors in case of unexpected removal of component.
+</Callout>
 
 That's it! Now it works as expected. Feel free to play with the demo in [CodeSandbox](https://codesandbox.io/s/awesome-engelbart-cwyqh?fontsize=14&hidenavigation=1&theme=dark).
 

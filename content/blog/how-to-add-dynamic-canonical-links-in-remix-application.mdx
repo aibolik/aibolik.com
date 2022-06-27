@@ -10,7 +10,9 @@ I rewrote my blog using Remix.run several months ago, but I faced an issue with 
 
 ## What is a canonical URL
 
-> If you already know what it is and why you need it, jump to the next section.
+<Callout>
+  If you already know what it is and why you need it, jump to the next section.
+</Callout>
 
 Simply put, a canonical URL is used by search engines to determine the origin of the content. Suppose your blog post is available through `http://`, `https://` and/or `www.` URLs. In that case, it is highly recommended to put a canonical URL that follows some structure, so that search engines will mark other pages as duplicates and *give all the credits* to the original content.
 
@@ -35,7 +37,9 @@ But TypeScript immediately turned me down and didn't accept having an object wit
 
 So after some research on the internet about adding dynamic link elements to a page in Remix, I came to a solution using `DynamicLinks`. So, `DynamicLinks` is not something that comes from the [Remix.run documentation](https://remix.run/docs) it is rather a utility that can be built using Remix.run capabilities. 
 
-> Big thanks to [Sergio](https://twitter.com/sergiodxa) who implemented it in [remix-utils](https://github.com/sergiodxa/remix-utils) Open-Source library. 
+<Callout>
+  Big thanks to [Sergio](https://twitter.com/sergiodxa) who implemented it in [remix-utils](https://github.com/sergiodxa/remix-utils) Open-Source library. 
+</Callout>
 
 ### How does `DynamicLinks` utility works
 
@@ -83,7 +87,9 @@ export const handle = {
 };
 ```
 
-> Note that this code assumes that I return `canonicalUrl` from my `loader` function.
+<Callout>
+  Note that this code assumes that I return `canonicalUrl` from my `loader` function.
+</Callout>
 
 And then I just need to render `DynamicLinks` component in the root of the Remix application:
 

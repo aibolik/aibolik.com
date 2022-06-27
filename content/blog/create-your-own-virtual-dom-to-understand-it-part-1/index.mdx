@@ -7,11 +7,15 @@ publishedOn: 26-07-2018
 
 In this article I want to recap my experience creating own “virtual DOM”. Sounds too ambitiously? Probably, but it is not that complicated as you might think. As the title states, it will make sense when you create your own, rather than reading thousands of articles about it.
 
-> Originally, I was inspired by the talk of [stefan judis](https://medium.com/u/c3a0319fab53) at Web Rebels 2018, so feel free to take a look at it [here](https://youtu.be/kghSjWmNJyQ).
+<Callout>
+  Originally, I was inspired by the talk of [stefan judis](https://medium.com/u/c3a0319fab53) at Web Rebels 2018, so feel free to take a look at it [here](https://youtu.be/kghSjWmNJyQ).
+</Callout>
 
 This concept of **Virtual DOM** got popular back in 2013 when [React was released](https://reactjs.org/blog/2013/06/05/why-react.html). Because of this concept ReactJS is one of super fast libraries for building UI. I’ll try to explain it in few sentences, then we will get to writing own one.
 
-> Virtual DOM is the representation of DOM as an object. When changes to state of application are made, new Virtual DOM is compared(applying **[diffing algorithms](https://reactjs.org/docs/reconciliation.html)**) with DOM and only changes are reflected, not causing full re-rendering of DOM.
+<Callout>
+  Virtual DOM is the representation of DOM as an object. When changes to state of application are made, new Virtual DOM is compared(applying **[diffing algorithms](https://reactjs.org/docs/reconciliation.html)**) with DOM and only changes are reflected, not causing full re-rendering of DOM.
+</Callout>
 
 Ok, here is a plan how we will create our virtual DOM.
 
@@ -51,7 +55,9 @@ export default function hyperscript(nodeName, attrs, ...children) {
 
 Firstly, It simply creates DOM element with *nodeName*. Secondly, sets its attributes, and last step to append child nodes with the check for text nodes.
 
-> **Note:** actually, we could go further and render children recursively, but I left this for later for simplicity reason.
+<Callout>
+  **Note:** actually, we could go further and render children recursively, but I left this for later for simplicity reason.
+</Callout>
 
 Here is how it can be used(from now on we will use `h` instead of `hyperscript`):
 
@@ -195,7 +201,9 @@ Now, remember our *render* function that rendered our **App**? We just need to c
 const newApp = renderNode(App(state));
 ```
 
-> This article became a bit longer than I thought, so I decided to break into two parts. Here is a [second part](/blog/create-your-own-virtual-dom-to-understand-it-part-2).
+<Callout>
+  This article became a bit longer than I thought, so I decided to break into two parts. Here is a [second part](/blog/create-your-own-virtual-dom-to-understand-it-part-2).
+</Callout>
 
 So, let’s recap this. We created a **hyperscript —** *virtual DOM factory*, __renderNode__ — *that turns virtual DOM into DOM element* and a *function component* **App** that creates whole page. The result is now the same as we did it before without virtual DOM, but now we have more control. In the next article we will explore what makes React(and virtual DOM) so fast.
 

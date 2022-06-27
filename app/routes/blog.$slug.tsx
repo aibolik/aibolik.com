@@ -19,6 +19,7 @@ import { Blockquote } from '~/components/blockquote';
 import { MainContent } from '~/sc/MainContent';
 import { DynamicLinksFunction } from '../utils/dynamic-links';
 import { BlogNewsletterForm } from '~/components/blog/blog-newsletter-form';
+import { Callout } from '~/components/callout';
 
 type LoaderData = {
   page: MdxPage;
@@ -97,6 +98,7 @@ const mdxComponents = {
   ul: UnorderedList,
   li: ListItem,
   blockquote: Blockquote,
+  Callout,
 };
 
 export default function BlogPage() {

@@ -117,7 +117,9 @@ export const renderComponent = (component, parent) => {
 };
 ```
 
-> I’ve added parent parameter, to that we could use `parent.appendChild` when we render the root component first time.
+<Callout>
+  I’ve added parent parameter, to that we could use `parent.appendChild` when we render the root component first time.
+</Callout>
 
 One little change to make it perfect is to change a little bit `renderNode` function. Remember how it looked before:
 
@@ -234,9 +236,11 @@ export const rerenderAfterSrc = 'https://images.ctfassets.net/w1fxlmsi3y1l/10sM7
 
 As you can see only the list updates, while the headline(Simple vDOM) does not re-render. Now we made our components **Autonomous.**
 
-> **Note 1**: I’ve changed a bit styles: displayed items in **flex** row, so that adding new items will not cause reflow.
+<Callout>
+  **Note 1**: I’ve changed a bit styles: displayed items in **flex** row, so that adding new items will not cause reflow.
 
-> **Note 2:** To see which parts of the website re-render you can enable **Paint flashing** in Chrome Dev Tools -> More(… icon)-> More tools -> Rendering)
+  **Note 2:** To see which parts of the website re-render you can enable **Paint flashing** in Chrome Dev Tools -> More(… icon)-> More tools -> Rendering)
+</Callout>
  
 ## Diffing algorithm
 
