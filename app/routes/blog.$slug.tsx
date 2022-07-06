@@ -42,10 +42,11 @@ export const loader: LoaderFunction = async ({ params }) => {
   if (!params.slug) {
     throw Error('Oops, this page does not exist');
   }
+  const slug = params.slug.toLowerCase();
 
-  const page = await getMdxPage('blog', params.slug);
+  const page = await getMdxPage('blog', slug);
 
-  const canonicalUrl = `https://aibolik.com/blog/${params.slug}`;
+  const canonicalUrl = `https://aibolik.com/blog/${slug}`;
 
   const data: LoaderData = {
     page,
