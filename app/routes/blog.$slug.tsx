@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { LoaderFunction, MetaFunction } from "@remix-run/node";
+import { LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { MdxPage } from "~/types"
 import { getMdxPage } from "~/utils/mdx.server"
@@ -65,6 +65,7 @@ export const meta: MetaFunction = ({ data }) => {
   return {
     title,
     description,
+    robots: 'index, follow',
   };
 }
 

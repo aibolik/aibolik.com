@@ -18,7 +18,7 @@ Simply put, a canonical URL is used by search engines to determine the origin of
 
 Another popular reason to use canonical URLs is to **syndicate your content**. If you publish your post on your blog and third-party platforms(like medium.com, dev.to, etc.) Google will consider them as [duplicate content](https://moz.com/learn/seo/duplicate-content). It might hurt the ranking of your website but using the canonical URLs you can turn this on its head and get back again *all the SEO credits* to your website by setting up canonical URLs in third-party platforms. This blog post is not meant to explain everything about canonical URLs, so if you still have questions I highly recommend reading about it [here](https://developers.google.com/search/docs/advanced/crawling/consolidate-duplicate-urls).
 
-## The problem with the Remix.run
+## The problem with the links in Remix.run
 
 Most likely, you have a template route like `blog.$slug.tsx` in your Remix application. I thought I could add canonical URLs using a [`links`](https://remix.run/docs/en/v1/api/conventions#links) function, just like this(assuming I return `canonicalUrl` in the route `loader`): 
 
@@ -69,7 +69,7 @@ export function DynamicLinks() {
 
 We can put this component in the root of the Remix app and it will work for all the routes that define `dynamicLinks` function in exported `handle` variable.
 
-### How to use `DynamicLinks`
+### How to use `DynamicLinks` in Remix app
 
 The usage of the utility is very simple. I define `dynamicLinks` function in my `blog.$slug.tsx` module and export it within `handle` Remix-defined constant:
 
