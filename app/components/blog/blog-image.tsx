@@ -1,9 +1,12 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
+const IMG_CLOUD_PROVIDER_URL = `https://aibolik.mo.cloudinary.net/`;
+
 interface BlogImageProps {
   imgProps: Omit<JSX.IntrinsicElements['img'], 'ref'>;
   caption?: string | React.ReactElement;
+  cloudId?: string;
 }
 
 const Wrapper = styled.div`
@@ -26,12 +29,13 @@ const Caption = styled.span`
 const BlogImage = ({
   imgProps,
   caption,
+  cloudId,
 }: BlogImageProps) => {
-
+  let src = cloudId ? `${IMG_CLOUD_PROVIDER_URL}${cloudId}` : imgProps.src;
 
   return (
     <Wrapper>
-      <Image {...imgProps} />
+      <Image {...imgProps} src={src} />
       {caption ? <Caption>{caption}</Caption> : null}
     </Wrapper>
   );

@@ -1,0 +1,128 @@
+---
+title: How to build a color palette for your website with Radix Colors
+description: Learn how you can use Radix Colors to build an accessible color palette for your website, using interactive color pickers and UI examples.
+readTimeInMins: 5
+publishedOn: 13-07-2022
+---
+
+If you are like me and love designing your website on your own, you probably faced the issue of choosing a **color schema** for your website. I used to use some websites like [Adobe Color](https://color.adobe.com/) to generate a color schema for my website. However, I always end up not liking the result, because it is hard to find the right matching of colors for each use case: website background, UI elements background, UI element properties' colors, borders, and more. I am not even talking about accessibility and dark mode. I am happy to share that I found a solution for all of my color-related problems: [**Radix Colors**](https://www.radix-ui.com/colors).
+
+<BlogImage 
+  cloudId="blog/radix-ui/radix-ui.png"
+  imgProps={{
+    alt: 'Screenshot of Radix UI Color website'
+  }}
+  caption="Radix Colors: truly gorgeous, accessible color system for your website"
+/>
+
+## Features of Radix colors system
+
+Radix Colors is a very simple yet feature-rich color system. The colors in Radix are not designed to be customized, because they are already hand-picked to be harmonious and well-balanced. These are some features of Radix Colors:
+
+- The accessibility is baked in
+- It has a rich set of different color sets(including rich colors and grayscale)
+- All the colors automatically support dark mode
+- The documentation is very clear and gives guidance on which color scale to use for each use case
+
+Let me show you how you could build your color palette for your website. 
+
+## How to compose a color palette for your website
+
+Designing is not one of my strengths. The reason I like Radix Colors is that I don't need to know much about **color theory** and other important aspects like **accessibility** and **dark mode**. Let me go through the steps, to set up a color palette for your website.
+
+
+### Step 1: choose brand colors for your website
+
+If you don't have a brand color for your website, choose one or more of the colors that Radix Colors provides. Use this little tool that I built especially for this post, to choose the colors that you like:
+
+import { ColorChooser } from './color-chooser';
+
+<ColorChooser />
+
+<Callout>
+  __*Note 1:*__ The background used for the button is not the only option, there are 12 steps for each color, and you can use whichever suits best for your use case.
+</Callout>
+
+<Callout>
+  __*Note 2:*__ [This page](https://www.radix-ui.com/docs/colors/palette-composition/the-scales) from Radix Colors documentation contains all the possible scales(dark and light modes), while the example above is only for dark mode.
+</Callout>
+
+
+### Step 2: choose a grayscale colors
+
+Almost every website needs a grayscale color, for things like text, borders, and backgrounds. Also, they are perfect as a contrast text color for headings. Here is another color picker to choose grayscale colors.
+
+<ColorChooser grayscale />
+
+<Callout>
+  If you are struggling to choose the right combination, take a look at [Natural pairing](https://www.radix-ui.com/docs/colors/palette-composition/composing-a-palette#natural-pairing) section of the Radix Colors website. They give pretty good combinations to select from.
+</Callout>
+
+
+### Step 3: include your selected colors in your code
+
+First of all, you need to install the `@radix-ui/colors` NPM package. You can do so by using one of these commands:
+
+```bash
+npm install @radix-ui/colors
+// or
+yarn add @radix-ui/colors
+```
+
+Then you need to import them either into your CSS(using `@import`) or if you use CSS framework into its theme as color objects. Here is an example with `styled-components`:
+
+```jsx
+import { blue, indigo, gray } from '@radix-ui/colors';
+import styled, { ThemeProvider } from 'styled-components';
+
+const theme = {
+  colors: {
+    ...blue,
+    ...indigo,
+    ...gray,
+    // any other colors you want to add
+  }
+};
+
+export default function App() {
+  return (
+    <ThemeProvider theme={theme}>
+      <YourApp />
+    </ThemeProvider>
+  );
+}
+```
+
+I personally import them using the `link` tag in the head of my HTML and then reference them using CSS variables. Since my website is built with the **Remix framework**, I can do it this way:
+
+```ts
+// in my root.tsx
+
+import indigoDark from '@radix-ui/colors/indigoDark.css';
+import mauveDark from '@radix-ui/colors/mauveDark.css';
+
+export const links: LinksFunction = () => {
+
+  return [
+    {
+      rel: 'stylesheet', href: mauveDark,
+    },
+    {
+      rel: 'stylesheet', href: indigoDark,
+    },
+    // and more colors that I need
+  ]
+}
+```
+
+### Step 4: use the colors to your advantage
+
+That is it. You can now use them when building any UI element. I have [Understanding the scale](https://www.radix-ui.com/docs/colors/palette-composition/understanding-the-scale) page bookmarked, whenever I need to think of colors for new UI components. It explains very well with examples of how to use each step of color for each use case. I [built a callout component](https://twitter.com/aibolik_/status/1544095371365842944?s=20&t=5O6mxEyGgNa0XJUxztTLMQ) that you saw on this page using the same guide.
+
+If you find this article helpful take a moment to [share it](https://twitter.com/intent/tweet?url=https%3A%2F%2Faibolik.com%2Fblog%2Fhow-to-build-a-color-palette-for-your-website-with-radix-colors&via=aibolik_&text=How%20to%20build%20a%20color%20palette%20for%20your%20website%20with%20Radix%20Colors&hashtags=color%2Cschema%2Cui) with others on Twitter. If you don't want to miss new posts like this, make sure to subscribe to my email list at the bottom of the page.
+
+## Resources
+
+- [Radix Colors website](https://www.radix-ui.com/colors)
+- [Adobe Color Wheel](https://color.adobe.com/create/color-wheel/)
+- [Understanding the Radix Colors scale](https://www.radix-ui.com/docs/colors/palette-composition/understanding-the-scale)

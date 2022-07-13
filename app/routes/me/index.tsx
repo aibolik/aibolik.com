@@ -1,4 +1,4 @@
-import { LoaderFunction, MetaFunction } from '@remix-run/node';
+import { LinksFunction, LoaderFunction, MetaFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { getMDXComponent } from 'mdx-bundler/client';
 import * as React from 'react';
@@ -35,6 +35,13 @@ const Heading = styled.h1`
 const HeaderWrapper = styled.div`
   padding: 24px 0;
 `;
+
+export const links: LinksFunction = () => {
+
+  return [{
+    rel: 'canonical', href: 'https://aibolik.com/me',
+  }];
+}
 
 export const loader: LoaderFunction = async ({ params }) => {
   const page = await getMdxPage('pages', 'me');

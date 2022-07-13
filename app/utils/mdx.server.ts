@@ -55,6 +55,10 @@ async function getMdxPage(contentDir: string, slug: string) {
 
       return options;
     },
+    esbuildOptions(options, frontmatter) {
+      options.platform = 'node';
+      return options;
+    },
   });
 
   return {
@@ -79,6 +83,10 @@ async function getMdxPagesInDirectory(contentDir: string) {
       const { code, frontmatter } = await bundleMDX({
         file,
         cwd,
+        esbuildOptions(options, frontmatter) {
+          options.platform = 'node';
+          return options;
+        },
       });
 
       return {
