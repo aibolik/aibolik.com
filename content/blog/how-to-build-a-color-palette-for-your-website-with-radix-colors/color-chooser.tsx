@@ -441,8 +441,8 @@ const Row: React.FC = ({ children }) => {
 };
 
 const Tile = styled.button`
-  background: ${(props) => COLORS[props.color].c10};
-  color: ${(props) => props.isDark ? 'black' : COLORS[props.color].c12};
+  background: ${(props) => COLORS[props.$color].c10};
+  color: ${(props) => props.$isDark ? 'black' : COLORS[props.$color].c12};
   flex: 1;
   min-height: 54px;
   line-height: 54px;
@@ -458,7 +458,7 @@ const Tile = styled.button`
 `;
 
 const Button = styled.button`
-  background: ${(props) => COLORS[props.color].c3};
+  background: ${(props) => COLORS[props.$color].c3};
   padding: 8px 24px;
   border-radius: 4px;
   border: none;
@@ -466,18 +466,18 @@ const Button = styled.button`
   cursor: pointer;
 
   :hover {
-    background: ${(props) => COLORS[props.color].c4};
+    background: ${(props) => COLORS[props.$color].c4};
   }
 `;
 
 const Text = styled.div`
-  color: ${(props) => props.high ? COLORS[props.color].c12 : COLORS[props.color].c11};
+  color: ${(props) => props.$high ? COLORS[props.$color].c12 : COLORS[props.$color].c11};
 `;
 
 const AlertBox = styled.div`
   flex: 1 0 100%;
-  background: ${(props) => COLORS[props.color].c2};
-  border: 3px solid ${(props) => COLORS[props.color].c3};
+  background: ${(props) => COLORS[props.$color].c2};
+  border: 3px solid ${(props) => COLORS[props.$color].c3};
   border-radius: 12px;
   padding: 16px 24px;
   margin-top: 24px;
@@ -510,7 +510,7 @@ const ColorChooser = ({ grayscale = false }: { grayscale?: boolean }) => {
           <Row>
             {GRAYSCALE_COLORS.map((color: string) => (
               // @ts-ignore
-              <Tile key={color as string} color={color} onClick={() => setColor(color)}>
+              <Tile key={color as string} $color={color} onClick={() => setColor(color)}>
                 {color}
               </Tile>
             ))}
@@ -523,7 +523,7 @@ const ColorChooser = ({ grayscale = false }: { grayscale?: boolean }) => {
             <Row key={i}>
               {W_COLORS_GRID[i].map((color: string) => (
                 // @ts-ignore
-                <Tile key={color as string} color={color} onClick={() => setColor(color)}>
+                <Tile key={color as string} $color={color} onClick={() => setColor(color)}>
                   {color}
                 </Tile>
               ))}
@@ -533,7 +533,7 @@ const ColorChooser = ({ grayscale = false }: { grayscale?: boolean }) => {
           <Row>
             {B_COLORS.map((color: string) => (
               // @ts-ignore
-              <Tile isDark key={color as string} color={color} onClick={() => setColor(color)}>
+              <Tile $isDark key={color as string} $color={color} onClick={() => setColor(color)}>
                 {color}
               </Tile>
             ))}
@@ -544,16 +544,16 @@ const ColorChooser = ({ grayscale = false }: { grayscale?: boolean }) => {
       </h4>
       <div>
         <UIItems>
-          <Button color={color}>
+          <Button $color={color}>
             Button
           </Button>
-          <Text color={color} high>
+          <Text $color={color} $high>
             High contrast text
           </Text>
-          <Text color={color}>
+          <Text $color={color}>
             Low contrast text
           </Text>
-          <AlertBox color={color}>
+          <AlertBox $color={color}>
             This is a sample alert box, that you can use to grab the attention of your reader
           </AlertBox>
         </UIItems>

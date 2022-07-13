@@ -108,7 +108,7 @@ export default function BlogPage() {
 
   const { code, frontmatter } = page;
 
-  const Component = React.useMemo(() => getMDXComponent(code), [code]);
+  const Component = React.useMemo(() => getMDXComponent(code, { 'styled': styled }), [code, styled]);
 
   const { title, publishedOn } = frontmatter;
 

@@ -42,6 +42,7 @@ async function getMdxPage(contentDir: string, slug: string) {
   const { code, frontmatter } = await bundleMDX({
     file,
     cwd,
+    globals: { 'styled-components': 'styled' },
     xdmOptions(options) {
       /**
       - Material-Theme-Palenight
@@ -53,10 +54,6 @@ async function getMdxPage(contentDir: string, slug: string) {
         rehypeCodeLang,
       ];
 
-      return options;
-    },
-    esbuildOptions(options, frontmatter) {
-      options.platform = 'node';
       return options;
     },
   });
@@ -83,10 +80,7 @@ async function getMdxPagesInDirectory(contentDir: string) {
       const { code, frontmatter } = await bundleMDX({
         file,
         cwd,
-        esbuildOptions(options, frontmatter) {
-          options.platform = 'node';
-          return options;
-        },
+        globals: { 'styled-components': 'styled' },
       });
 
       return {
