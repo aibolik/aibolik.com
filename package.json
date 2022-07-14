@@ -5,9 +5,9 @@
   "license": "",
   "scripts": {
     "test": "jest",
-    "build": "remix build",
+    "build": "node --require @lukalabs/esbuild-inject-plugin -- ./node_modules/.bin/remix build",
     "deploy": "flyctl --app aibolik-com deploy .",
-    "dev": "remix dev",
+    "dev": "node --require @lukalabs/esbuild-inject-plugin -- ./node_modules/.bin/remix dev",
     "start": "remix-serve build"
   },
   "dependencies": {
@@ -30,6 +30,8 @@
     "tiny-invariant": "^1.2.0"
   },
   "devDependencies": {
+    "@lukalabs/esbuild-inject-plugin": "^1.0.1",
+    "@lukalabs/esbuild-styled-components": "^1.0.0",
     "@remix-run/dev": "^1.6.4",
     "@types/jest": "^28.1.5",
     "@types/lodash.throttle": "^4.1.7",
