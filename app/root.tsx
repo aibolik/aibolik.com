@@ -43,9 +43,17 @@ export const links: LinksFunction = () => {
 }
 
 export const meta: MetaFunction = () => {
+  const title = 'My Online space to share my learning in tech | Aibol Kussain';
+  const description = 'This is my creative space where I share my learnings in tech industry through interactive blog posts. Come and learn more!';
+
   return {
-    title: 'Aibol Kussain\'s blog',
-    description: 'My creative space where I share my learnings in tech with interactive and friendly blog posts. Read more!'
+    title,
+    'og:title': title,
+    'twitter:title': title,
+    description,
+    'og:description': description,
+    'twitter:description': description,
+    'og:url': 'https://aibolik.com',
   };
 };
 

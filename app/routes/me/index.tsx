@@ -56,10 +56,17 @@ export const loader: LoaderFunction = async ({ params }) => {
 export const meta: MetaFunction = ({ data }) => {
   const { frontmatter } = data.page;
 
-  const { title } = frontmatter;
+  const { title, description, } = frontmatter;
 
   return {
     title,
+    description,
+    'og:title': title,
+    'twitter:title': title,
+    'og:description': description,
+    'twitter:description': description,
+    'og:image': 'https://aibolik.mo.cloudinary.net/pages/me/me.jpeg',
+    'og:url': 'https://aibolik.com/me',
   };
 }
 

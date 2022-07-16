@@ -61,10 +61,15 @@ export const meta: MetaFunction = ({ data }) => {
 
   const { title, description } = frontmatter;
 
+  const enhancedTitle = `${title} | Aibol Kussain`;
 
   return {
-    title,
+    title: enhancedTitle,
+    'og:title': enhancedTitle,
+    'twitter:title': enhancedTitle,
     description,
+    'og:description': description,
+    'twitter:description': description,
     robots: 'index, follow',
   };
 }
