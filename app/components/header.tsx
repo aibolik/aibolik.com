@@ -11,6 +11,7 @@ const LINKS = [
   { name: 'All posts', to: '/'},
   // { name: 'Topics', to: '/topics'},
   // { name: 'Short writes', to: '/short-writes'},
+  { name: 'Newsetter', to: '/newsletter' },
   { name: 'Who is Aibol?', to: '/me'},
 ]
 

@@ -13,7 +13,10 @@ export const action: ActionFunction = async ({
     }, 405);
   }
 
-  const email = (await request.formData()).get('email');
+  const formData = await request.formData();
+  const email = formData.get('email');
+  // @ts-ignore
+  const firstName: string | null = formData.get('first_name');
 
   if (email == null || !EMAIL_REGEX.test(email as string)) {
     return json({
@@ -21,7 +24,7 @@ export const action: ActionFunction = async ({
     });
   }
 
-  await addNewSubscriber(email as string);
+  await addNewSubscriber(email as string, firstName);
 
   return json({
     success: true
