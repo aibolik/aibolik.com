@@ -15,7 +15,7 @@ const fileExists = async (path: string) => {
   }
 }
 
-const getMdxFileOrDirectory = async (contentDir: string, slug: string) => {
+export const getMdxFileOrDirectory = async (contentDir: string, slug: string) => {
   const dirPath = `content/${contentDir}`;
   const absPath = path.resolve(__dirname, '..', dirPath);
 

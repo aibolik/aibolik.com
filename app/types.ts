@@ -1,4 +1,3 @@
-
 type MdxPage = {
   code: string;
   slug: string;
@@ -12,11 +11,21 @@ type MdxPage = {
   }
 }
 
+type MdxEmail = {
+  code: string;
+  slug: string;
+  
+  frontmatter: {
+    subject?: string;
+  }
+}
+
 type MdxListItem = Omit<MdxPage, 'code'>;
 
 export type {
   MdxPage,
   MdxListItem,
+  MdxEmail,
 };
 
 declare global {
